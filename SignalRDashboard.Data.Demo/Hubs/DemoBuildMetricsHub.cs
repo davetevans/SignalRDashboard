@@ -5,11 +5,12 @@ using SignalRDashboard.Data.Demo.Pollers;
 
 namespace SignalRDashboard.Data.Demo.Hubs
 {
-    [HubName("demoSiteStatus")]
-    public class DemoSiteStatusHub : PollingHub<SiteStatuses>
+    [HubName("demoBuildMetrics")]
+    public class DemoBuildMetricsHub : PollingHub<BuildMetrics>
     {
-        public DemoSiteStatusHub() : base(new TrackConnectedUsersStrategy(),
-            DemoSiteStatusPoller.Instance)
+        public DemoBuildMetricsHub() 
+            : base(new TrackConnectedUsersStrategy(),
+                  DemoBuildMetricsPoller.Instance)
         {
         }
     }

@@ -5,12 +5,12 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace SignalRDashboard.Data.Core.Hubs
 {
-    public abstract class HubBase : Hub
+    public abstract class DashboardHub: Hub
     {
         private readonly IHubUserConnectionTrackingStrategy _connectionTrackingStrategy;
         private readonly string _hubName;
 
-        protected HubBase(IHubUserConnectionTrackingStrategy connectionTrackingStrategy)
+        protected DashboardHub(IHubUserConnectionTrackingStrategy connectionTrackingStrategy)
         {
             _connectionTrackingStrategy = connectionTrackingStrategy;
             HubNameAttribute hubAttribute = (HubNameAttribute)Attribute.GetCustomAttribute(GetType(), typeof(HubNameAttribute));

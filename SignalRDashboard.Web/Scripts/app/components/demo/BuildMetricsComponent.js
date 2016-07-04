@@ -1,31 +1,31 @@
 ﻿(function (signalrdashboardDemo) {
-    signalrdashboardDemo.SiteStatisticsComponent =
+    signalrdashboardDemo.BuildMetricsCompnent =
       ng.core.Component({
-          selector: 'demo-site-statistics',
-          templateUrl: '/scripts/app/templates/demo/SiteStatisticsComponent.html'
+          selector: 'demo-build-metrics',
+          templateUrl: '/scripts/app/templates/demo/BuildMetricsComponent.html'
       })
       .Class({
           constructor: function() {
-              this.model = new signalrdashboardDemo.SiteStatistics();
-              this.componentName = 'DemoSiteStatistics';
+              this.model = new signalrdashboardDemo.BuildMetrics();
+              this.componentName = 'DemoBuildMetrics';
               signalrdashboard.dashboard.registerComponent(this);
           },
           ngOnInit: function() {              
               signalrdashboard.dashboard.completeComponentRegistration();             
           },
           setupHub : function(connection) {
-            var hub = connection.demoSiteStatistics;
+            var hub = connection.demoBuildMetrics;
             var model = this.model;
             
             // Add a client-side hub method that the server will call
-            hub.client.updateDemoSiteStatistics = function(stats) {
+            hub.client.updateDemoBuildMetrics = function(stats) {
                 model.updateFromData(stats);
             };
           },
           initialiseData: function(connection) {
               var model = this.model;
              
-              connection.demoSiteStatistics.server.getModel().done(function(stats) {
+              connection.demoBuildMetrics.server.getModel().done(function(stats) {
                   model.updateFromData(stats);
               });                    
           }
