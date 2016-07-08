@@ -1,33 +1,33 @@
-﻿(function (signalrdashboardDemo) {
-    signalrdashboardDemo.BuildMetricsComponent =
+﻿(function (signalrdashboardMilliman) {
+    signalrdashboardMilliman.TeamCityStatusComponent =
       ng.core.Component({
-          selector: 'demo-build-metrics',
-          templateUrl: '/scripts/app/templates/demo/BuildMetricsComponent.html'
+          selector: 'team-city-status',
+          templateUrl: '/scripts/app/templates/milliman/TeamCityStatusComponent.html'
       })
       .Class({
           constructor: function() {
-              this.model = new signalrdashboardDemo.BuildMetrics();
-              this.componentName = 'DemoBuildMetrics';
+              this.model = new signalrdashboardMilliman.TeamCityStatus();
+              this.componentName = 'TeamCityStatus';
               signalrdashboard.dashboard.registerComponent(this);
           },
           ngOnInit: function() {              
               signalrdashboard.dashboard.completeComponentRegistration();             
           },
           setupHub : function(connection) {
-            var hub = connection.demoBuildMetrics;
+            var hub = connection.teamCityStatus;
             var model = this.model;
             
             // Add a client-side hub method that the server will call
-            hub.client.updateDemoBuildMetrics = function(stats) {
+            hub.client.updateTeamCityStatus = function(stats) {
                 model.updateFromData(stats);
             };
           },
           initialiseData: function(connection) {
               var model = this.model;
              
-              connection.demoBuildMetrics.server.getModel().done(function(stats) {
+              connection.teamCityStatus.server.getModel().done(function(stats) {
                   model.updateFromData(stats);
               });                    
           }
           });
-})(window.signalrdashboard.demo || (window.signalrdashboard.demo = {}));
+})(window.signalrdashboard.milliman || (window.signalrdashboard.milliman = {}));

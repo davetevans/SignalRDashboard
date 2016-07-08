@@ -1,13 +1,19 @@
-﻿<div class="row">
-    <div class="col-lg-3 dashboard-column">
-        <demo-site-status></demo-site-status>
+﻿<div class="flex-container">
+    <div class="flex-item dashboard-column">
         <demo-site-statistics></demo-site-statistics>
     </div>
-    <div class="col-lg-3 dashboard-column">
+    <div class="flex-item dashboard-column">
+        <!--<demo-site-status></demo-site-status>-->
+        <team-city-status></team-city-status>
+    </div>
+    <div class="flex-item dashboard-column">
         <demo-build-metrics></demo-build-metrics>
     </div>
+    <div class="flex-item dashboard-column">
+        <twitter-status></twitter-status>
+    </div>
 </div>
-<br/>
+<br />
 <div class="row">
     <div class="col-lg-3 dashboard-column">
         <controls></controls>

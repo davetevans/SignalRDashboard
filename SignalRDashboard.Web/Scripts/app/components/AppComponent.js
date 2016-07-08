@@ -3,11 +3,9 @@
       ng.core.Component({
             selector: "dashboard-app",            
             templateUrl: "/scripts/app/templates/core/DashboardComponent.html",
-            directives: [signalrdashboard.core.ConnectedUsersComponent,
+            directives: [
                 signalrdashboard.core.ControlsComponent,
-                signalrdashboard.demo.SiteStatusComponent,
-                signalrdashboard.demo.SiteStatisticsComponent,
-                signalrdashboard.demo.BuildMetricsCompnent
+                signalrdashboard.milliman.TwitterStatusComponent
             ]
           }    
       )
@@ -16,3 +14,11 @@
           }          
       });
 })(window.signalrdashboard || (window.signalrdashboard = {}));
+
+/*
+                signalrdashboard.core.ConnectedUsersComponent,
+                signalrdashboard.demo.SiteStatusComponent,
+                signalrdashboard.demo.SiteStatisticsComponent,
+                signalrdashboard.demo.BuildMetricsComponent,
+                signalrdashboard.milliman.TeamCityStatusComponent
+*/
