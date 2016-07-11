@@ -6,7 +6,7 @@ using SignalRDashboard.Data.Milliman.Pollers;
 namespace SignalRDashboard.Data.Milliman.Hubs
 {
     [HubName("teamCityStatus")]
-    public class TeamCityStatusHub : PollingHub<TeamCityStatus>
+    public class TeamCityStatusHub : PollingHub<TeamCityStatuses>
     {
         public TeamCityStatusHub() 
             : base(new TrackConnectedUsersStrategy(),

@@ -4,7 +4,11 @@
             Team City
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12 component-sub-title">{{model.projectName}}</div>
+    <div *ngFor="#project of model" class="row">
+        <div class="col-lg-12 ">
+            <div class="big-box" [class.success]="project.include" [class.error-long]="!project.include">
+                {{project.projectName}}
+            </div>
+        </div>
     </div>
 </div>

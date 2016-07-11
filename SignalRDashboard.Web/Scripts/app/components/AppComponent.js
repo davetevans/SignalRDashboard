@@ -5,7 +5,7 @@
             templateUrl: "/scripts/app/templates/core/DashboardComponent.html",
             directives: [
                 signalrdashboard.core.ControlsComponent,
-                signalrdashboard.milliman.TwitterStatusComponent
+                signalrdashboard.milliman.TeamCityStatusComponent
             ]
           }    
       )
@@ -19,6 +19,6 @@
                 signalrdashboard.core.ConnectedUsersComponent,
                 signalrdashboard.demo.SiteStatusComponent,
                 signalrdashboard.demo.SiteStatisticsComponent,
-                signalrdashboard.demo.BuildMetricsComponent,
-                signalrdashboard.milliman.TeamCityStatusComponent
+                signalrdashboard.demo.BuildMetricsComponent
+                signalrdashboard.milliman.TwitterStatusComponent,
 */

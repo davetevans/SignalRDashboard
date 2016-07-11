@@ -6,22 +6,22 @@ namespace SignalRDashboard.Data.Milliman.DataSources
     public class TwitterStatusProvider : ITwitterStatusProvider
     {
         private readonly bool _isInitialised = false;
-        private readonly TwitterClient _twitterClient = new TwitterClient();
+        private readonly TwitterClient _client = new TwitterClient();
         private TwitterStatusData _twitterData = new TwitterStatusData();
 
         public TwitterStatusProvider()
         {
-            _twitterClient.ScreenName = "sandwichvanspam";
-            _twitterClient.OAuthConsumerKey = "7SsZrUGslefI2XnC51hUQyGnI";
-            _twitterClient.OAuthConsumerSecret = "SgqayvwaOi58o2bMbgPLmVZGz0V5gwoRVciXPHueQpn7KUZBMS";
-            _twitterClient.OAuthAccessToken = null;
+            _client.ScreenName = "sandwichvanspam";
+            _client.OAuthConsumerKey = "7SsZrUGslefI2XnC51hUQyGnI";
+            _client.OAuthConsumerSecret = "SgqayvwaOi58o2bMbgPLmVZGz0V5gwoRVciXPHueQpn7KUZBMS";
+            _client.OAuthAccessToken = null;
         }
 
         public TwitterStatusData GetTwitterStatus()
         {
             if (!_isInitialised)
             {
-                _twitterData = _twitterClient.GetLatestTweet(_twitterClient.OAuthAccessToken).Result;
+                _twitterData = _client.GetLatestTweet(_client.OAuthAccessToken).Result;
             }
 
             return _twitterData;

@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EasyHttp, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EasyHttp.1.6.14\lib\net40\EasyHttp.dll</HintPath>
+    <Reference Include="EasyHttp, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyHttp.1.6.1.0\lib\net40\EasyHttp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
@@ -93,6 +93,7 @@
     <Compile Include="DataSources\TwitterStatusProvider.cs" />
     <Compile Include="DataSources\Twitter\TwitterClient.cs" />
     <Compile Include="Hubs\Models\TeamCityStatus.cs" />
+    <Compile Include="Hubs\Models\TeamCityStatuses.cs" />
     <Compile Include="Hubs\Models\TwitterStatus.cs" />
     <Compile Include="Hubs\TeamCityStatusHub.cs" />
     <Compile Include="Hubs\TwitterStatusHub.cs" />

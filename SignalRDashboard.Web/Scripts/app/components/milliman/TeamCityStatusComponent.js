@@ -1,4 +1,15 @@
 ﻿(function (signalrdashboardMilliman) {
+    function updateModelArray(currentModelArray, newModelArray) {
+        for (var i = 0; i < newModelArray.length; i++) {
+            var foundProject = currentModelArray.find(function(project) { return project.projectId === newModelArray[i].projectId; });
+            if (!foundProject) {
+                foundProject = new signalrdashboardMilliman.TeamCityStatus();
+                currentModelArray.push(foundProject);
+            } 
+            foundProject.updateFromData(newModelArray[i]);    
+        }
+    };
+
     signalrdashboardMilliman.TeamCityStatusComponent =
       ng.core.Component({
           selector: 'team-city-status',
@@ -6,7 +17,7 @@
       })
       .Class({
           constructor: function() {
-              this.model = new signalrdashboardMilliman.TeamCityStatus();
+              this.model = [];
               this.componentName = 'TeamCityStatus';
               signalrdashboard.dashboard.registerComponent(this);
           },
@@ -19,14 +30,14 @@
             
             // Add a client-side hub method that the server will call
             hub.client.updateTeamCityStatus = function(stats) {
-                model.updateFromData(stats);
+                updateModelArray(model, stats);
             };
           },
           initialiseData: function(connection) {
               var model = this.model;
              
               connection.teamCityStatus.server.getModel().done(function(stats) {
-                  model.updateFromData(stats);
+                  updateModelArray(model, stats);
               });                    
           }
           });

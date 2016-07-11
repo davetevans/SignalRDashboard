@@ -8,7 +8,7 @@ using SignalRDashboard.Data.Milliman.Hubs.Models;
 
 namespace SignalRDashboard.Data.Milliman.Pollers
 {
-    public class TeamCityStatusPoller : DatasourcePoller<TeamCityStatus, TeamCityStatusHub>
+    public class TeamCityStatusPoller : DatasourcePoller<TeamCityStatuses, TeamCityStatusHub>
     {
         private static readonly Lazy<TeamCityStatusPoller> PollerInstance = new Lazy<TeamCityStatusPoller>(() => new TeamCityStatusPoller(GlobalHost.ConnectionManager.GetHubContext<TeamCityStatusHub>().Clients));
         private readonly ITeamCityStatusProvider _provider;
@@ -20,20 +20,19 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         }
 
         public static TeamCityStatusPoller Instance => PollerInstance.Value;
-
-        protected override void RefreshData(TeamCityStatus model)
+        
+        protected override void RefreshData(TeamCityStatuses model)
         {
             var data = _provider.GetTeamCityStatus();
             foreach (var d in data)
             {
-                model.ProjectId = d.ProjectId;
-                model.ProjectName = d.ProjectName;
+                Model.UpdateOrAddSite(d.ProjectId, d.ProjectName, true);
             }
         }
 
-        protected override void BroadcastData(TeamCityStatus model)
+        protected override void BroadcastData(TeamCityStatuses model)
         {
-            Clients.All.updateTeamCityStatus(model);
+            Clients.All.updateTeamCityStatus(model.GetProjects);
         }
     }
 }
