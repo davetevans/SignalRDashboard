@@ -5,14 +5,11 @@
         // Properties matching data model received via SignalR
         this.projectId = "";
         this.projectName = "";
-
-        // Error tracking properties
-        //this.hasNewTweet = false;
+        this.buildConfigs = [];
 
         // Error check conditions
         var model = this;
         var errorChecks = [];
-        //errorChecks.push({ model: model, condition: function() { return model.tweetIsNew; }, targetProperty: 'hasNewTweet' });
 
         this.updateFromData = function(data) {            
             signalrdashboard.mapping.map(data, this);

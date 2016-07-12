@@ -1,13 +1,21 @@
 ﻿.flex-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 .flex-item {
-    min-width: 100px;
-    margin: 10px;
-    padding: 10px;
-    flex-grow: 1;
-    border: 5px solid #FFF;
+    flex: 1;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid #FFF;
+    height: 650px;
+    overflow-y: auto;
+}
+
+.flex-item-full {
+    flex: 1 100%;
+    margin: 5px;
+    border: 2px solid #FFF;
 }

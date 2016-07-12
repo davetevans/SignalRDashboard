@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using SignalRDashboard.Data.Milliman.DataSources.Models;
+using SignalRDashboard.Data.Milliman.DataSources.Models.TeamCity;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
 {
     public interface ITeamCityStatusProvider
     {
-        IEnumerable<TeamCityStatusData> GetTeamCityStatus();
+        IEnumerable<ProjectData> GetTeamCityStatus();
     }
 }

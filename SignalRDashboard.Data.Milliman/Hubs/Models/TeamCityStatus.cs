@@ -1,32 +1,69 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using SignalRDashboard.Data.Core.Hubs.Models;
+using SignalRDashboard.Data.Milliman.DataSources.Models.TeamCity;
+using SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity;
 
 namespace SignalRDashboard.Data.Milliman.Hubs.Models
 {
-    public class TeamCityStatus : DashboardHubModel
+    public class TeamCityStatus : DashboardHubModel, IEnumerable<TeamCityProject>
     {
-        private string _projectId;
-        private string _projectName;
-        private bool _include;
+        public override bool HasChanged { get; protected set; }
 
-        public string ProjectId
-        {
-            get { return _projectId; }
-            set { SetProperty(ref _projectId, value); }
-        }
+        private readonly List<TeamCityProject> _projects = new List<TeamCityProject>();
 
-        public string ProjectName
+        public void UpdateOrAddProject(ProjectData p)
         {
-            get { return _projectName; }
-            set { SetProperty(ref _projectName, value); }
-        }
-        
-        public bool Include
-        {
-            get { return _include; }
-            set
+            var project = _projects.FirstOrDefault(s => s.ProjectId == p.ProjectId);
+            if (project == null)
             {
-                SetProperty(ref _include, value);
+                project = new TeamCityProject
+                {
+                    ProjectId = p.ProjectId,
+                    ProjectName = p.ProjectName,
+                    BuildConfigs = p.BuildConfigs.Select(bc => new TeamCityBuildConfig
+                    {
+                        ConfigId = bc.ConfigId,
+                        ConfigName = bc.ConfigName
+                    }).ToList()
+                };
+                _projects.Add(project);
+                HasChanged = true;
             }
+            else
+            {
+                project.ProjectId = p.ProjectId;
+                project.ProjectName = p.ProjectName;
+                project.BuildConfigs = p.BuildConfigs.Select(bc => new TeamCityBuildConfig
+                {
+                    ConfigId = bc.ConfigId,
+                    ConfigName = bc.ConfigName
+                }).ToList();
+            }
+
+            HasChanged = HasChanged || project.HasChanged;
+        }
+
+        public override void ResetChangedState()
+        {
+            HasChanged = false;
+            foreach (var project in _projects)
+            {
+                project.ResetChangedState();
+            }
+        }
+
+        public TeamCityProject[] GetProjects => _projects.ToArray();
+
+        public IEnumerator<TeamCityProject> GetEnumerator()
+        {
+            return _projects.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

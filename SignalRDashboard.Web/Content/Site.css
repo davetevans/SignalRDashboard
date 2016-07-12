@@ -141,3 +141,14 @@ footer {
     padding-top: 10px;
     padding-bottom: 10px;   
 }
+
+.box {
+    font-size: 1em;
+    font-weight: 800;
+    text-align: left;
+    padding: 10px;
+}
+
+.box-header {
+    background-color: green;
+}

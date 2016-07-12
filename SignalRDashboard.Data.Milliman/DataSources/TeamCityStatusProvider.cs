@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SignalRDashboard.Data.Milliman.DataSources.Models;
+using SignalRDashboard.Data.Milliman.DataSources.Models.TeamCity;
 using TeamCitySharp;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
@@ -9,10 +9,16 @@ namespace SignalRDashboard.Data.Milliman.DataSources
     {
         private readonly bool _isInitialised = false;
         private readonly TeamCityClient _client;
-        private IList<TeamCityStatusData> _teamCityData = new List<TeamCityStatusData>();
-        
+        private readonly IList<ProjectData> _teamCityData = new List<ProjectData>();
+        private readonly List<string> _includedProjects = new List<string>();
+
         public TeamCityStatusProvider()
         {
+            _includedProjects.Add("Releases");
+            _includedProjects.Add("Documentation");
+            _includedProjects.Add("HTML");
+            _includedProjects.Add("Server");
+
             var baseUrl = "acbuild2.cloudapp.net";
             var username = "build.monitor";
             var password = "Pairing0_!";
@@ -21,17 +27,33 @@ namespace SignalRDashboard.Data.Milliman.DataSources
             _client.Connect(username, password);
         }
         
-        public IEnumerable<TeamCityStatusData> GetTeamCityStatus()
+        public IEnumerable<ProjectData> GetTeamCityStatus()
         {
             if (!_isInitialised)
             {
-                foreach (var project in _client.BuildConfigs.All())
+                foreach (var project in _client.Projects.All().Where(p => _includedProjects.Contains(p.Name)))
                 {
-                    _teamCityData.Add(new TeamCityStatusData
+                    var item = new ProjectData
                     {
-                        ProjectId = $"{project.ProjectId} - {project.Id}",
-                        ProjectName = $"{project.ProjectName} - {project.Name}"
-                    });
+                        ProjectId = $"{project.Id}",
+                        ProjectName = $"{project.Name}",
+                        BuildConfigs = new List<BuildConfigData>()
+                    };
+
+                    foreach (var config in _client.BuildConfigs.ByProjectId(project.Id))
+                    {
+                        foreach (var build in _client.Builds.ByBuildConfigId(config.Id))
+                        {
+                            item.BuildConfigs.Add(new BuildConfigData
+                            {
+                                ConfigId = config.Id,
+                                ConfigName = $"{config.Name} - {build.Number} - {build.Status}"
+                            });
+                        }
+                        
+
+                        _teamCityData.Add(item);
+                    }
                 }
             }
 
