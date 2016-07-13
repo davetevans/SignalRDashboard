@@ -236,6 +236,7 @@
   <ItemGroup>
     <Content Include="Content\Custom.css" />
     <Content Include="Content\Demo.css" />
+    <Content Include="Content\images\van.png" />
     <Content Include="Content\Sounds\DemoBuildMetrics\Success\SmallCrowdApplause.mp3" />
     <Content Include="Scripts\angular2-beta0\es6-shim.min.js" />
     <Content Include="Scripts\app\components\AppComponent.js" />

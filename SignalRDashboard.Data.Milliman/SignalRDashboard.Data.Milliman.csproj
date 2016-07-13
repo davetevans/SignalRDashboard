@@ -59,6 +59,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -79,7 +80,8 @@
     <Compile Include="Core\XmlAccessorException.cs" />
     <Compile Include="DataSources\ITeamCityStatusProvider.cs" />
     <Compile Include="DataSources\ITwitterStatusProvider.cs" />
-    <Compile Include="DataSources\Models\TeamCity\BuildConfigData.cs" />
+    <Compile Include="DataSources\Models\TeamCity\BuildStatus.cs" />
+    <Compile Include="DataSources\Models\TeamCity\BuildData.cs" />
     <Compile Include="DataSources\Models\TeamCity\ProjectData.cs" />
     <Compile Include="DataSources\Models\TwitterStatusData.cs" />
     <Compile Include="DataSources\TeamCityStatusProvider.cs" />

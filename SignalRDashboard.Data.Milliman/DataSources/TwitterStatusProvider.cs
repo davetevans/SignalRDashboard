@@ -1,4 +1,5 @@
-﻿using SignalRDashboard.Data.Milliman.DataSources.Models;
+﻿using System.Configuration;
+using SignalRDashboard.Data.Milliman.DataSources.Models;
 using SignalRDashboard.Data.Milliman.DataSources.Twitter;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
@@ -11,9 +12,10 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
         public TwitterStatusProvider()
         {
-            _client.ScreenName = "sandwichvanspam";
-            _client.OAuthConsumerKey = "7SsZrUGslefI2XnC51hUQyGnI";
-            _client.OAuthConsumerSecret = "SgqayvwaOi58o2bMbgPLmVZGz0V5gwoRVciXPHueQpn7KUZBMS";
+            var config = ConfigurationManager.AppSettings;
+            _client.ScreenName = config["TwitterScreenName"];
+            _client.OAuthConsumerKey = config["TwitterKey"];
+            _client.OAuthConsumerSecret = config["TwitterSecret"];
             _client.OAuthAccessToken = null;
         }
 

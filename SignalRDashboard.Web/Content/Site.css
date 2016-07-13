@@ -24,72 +24,88 @@ textarea {
     max-width: 280px;
 }
 
-
 div.right-align-col-2 div.row > div:nth-child(2) {
     text-align: right;
 }
 
 div.signalrdashboard-component {
-    font-size: 1.6em;
+    font-size: 2.5em;
     padding-left: 2px;
 }
 
-    div.signalrdashboard-component .component-title {
-        font-size: 1.6em;
-        font-weight: 900;
-    }
+div.signalrdashboard-component .component-title {
+    font-size: 1.4em;
+    font-weight: 900;
+    padding-bottom: 10px;
+}
 
-     div.signalrdashboard-component .component-sub-title {
-        font-size: 1.2em;
-        font-weight: bold;
-    }
-    div.signalrdashboard-component span.small {
-        font-size: 0.9em;
-    }
+div.signalrdashboard-component .component-sub-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+div.signalrdashboard-component span.small {
+    font-size: 0.9em;
+}
 
-    div.signalrdashboard-component span.xsmall {
-        font-size: 0.7em;
-    }
+div.signalrdashboard-component span.xsmall {
+    font-size: 0.7em;
+}
 
-    div.signalrdashboard-component span.error {
-        color: #dd0000;
-    }
+div.signalrdashboard-component span.error {
+    color: #dd0000;
+}
     
-    div.signalrdashboard-component span.yellow {
-        color: #E0BB00;
-    }
+div.signalrdashboard-component span.yellow {
+    color: #E0BB00;
+}
 
-    div.signalrdashboard-component span.warning {
-        color: #FF6A00;
-    }
+div.signalrdashboard-component span.warning {
+    color: #FF6A00;
+}
 
-    div.signalrdashboard-component span.success {
-        color: #267F00;
-    }
+div.signalrdashboard-component span.success {
+    color: #267F00;
+}
+
+div.signalrdashboard-component span.alert {
+    color: #FF6A00;
+}
     
-    @keyframes pulsate-error {
-        0% {
-            background-color:rgba(221,0,0,1);
-        }
-        50% {            
-            background-color:rgba(221, 0, 0, 0.5);
-        }
-        100% {            
-            background-color:rgba(221,0,0,1);
-        }
+@keyframes pulsate-error {
+    0% {
+        background-color:rgba(221,0,0,1);
     }
+    50% {            
+        background-color:rgba(221, 0, 0, 0.5);
+    }
+    100% {            
+        background-color:rgba(221,0,0,1);
+    }
+}
 
-     @keyframes pulsate-warning {
-        0% {
-            background-color:rgba(255,122,13,1);
-        }
-        50% {            
-            background-color:rgba(255, 122, 13, 0.5);
-        }
-        100% {            
-            background-color:rgba(255, 122, 13 ,1);
-        }
+@keyframes pulsate-warning {
+    0% {
+        background-color:rgba(255,122,13,1);
     }
+    50% {            
+        background-color:rgba(255, 122, 13, 0.5);
+    }
+    100% {            
+        background-color:rgba(255, 122, 13 ,1);
+    }
+}
+
+@keyframes pulsate-alert {
+    0% {
+        background-color:rgba(255,122,13,1);
+    }
+    50% {            
+        background-color:rgba(255, 122, 13, 0.5);
+    }
+    100% {            
+        background-color:rgba(255, 122, 13 ,1);
+    }
+}
 
 div.signalrdashboard-component div.error, div.signalrdashboard-component div.error-long {
     animation-name: pulsate-error;
@@ -99,7 +115,11 @@ div.signalrdashboard-component div.warning {
     animation-name: pulsate-warning;
 }
 
-div.signalrdashboard-component div.error, div.signalrdashboard-component div.error-long, div.signalrdashboard-component div.warning {
+div.signalrdashboard-component div.alert {
+    animation-name: pulsate-alert;
+}
+
+div.signalrdashboard-component div.error, div.signalrdashboard-component div.error-long, div.signalrdashboard-component div.warning, div.signalrdashboard-component div.alert {
     animation-duration: 1s;
     animation-direction: linear;
     animation-timing-function: ease-in-out;
@@ -112,6 +132,10 @@ div.error-long {
 
  div.error, div.warning {
      animation-iteration-count: 2;
+}
+
+div.error, div.alert {
+     animation-iteration-count: 5;
 }
 
 div.row {
@@ -135,20 +159,18 @@ footer {
 }
 
 .big-box {
-    font-size: 1.6em;
+    font-size: 2em;
     font-weight: 800;
     text-align: center;
     padding-top: 10px;
-    padding-bottom: 10px;   
 }
 
 .box {
     font-size: 1em;
     font-weight: 800;
-    text-align: left;
-    padding: 10px;
+    padding: 5px;
 }
 
 .box-header {
-    background-color: green;
+    background-color: #474A55;
 }

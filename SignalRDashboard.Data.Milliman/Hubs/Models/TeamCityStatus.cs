@@ -25,7 +25,10 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     BuildConfigs = p.BuildConfigs.Select(bc => new TeamCityBuildConfig
                     {
                         ConfigId = bc.ConfigId,
-                        ConfigName = bc.ConfigName
+                        ConfigName = bc.ConfigName,
+                        BuildNumber = bc.BuildNumber,
+                        BuildFailed = bc.BuildFailed,
+                        PercentageComplete = bc.PercentageComplete
                     }).ToList()
                 };
                 _projects.Add(project);
@@ -38,7 +41,10 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 project.BuildConfigs = p.BuildConfigs.Select(bc => new TeamCityBuildConfig
                 {
                     ConfigId = bc.ConfigId,
-                    ConfigName = bc.ConfigName
+                    ConfigName = bc.ConfigName,
+                    BuildNumber = bc.BuildNumber,
+                    BuildFailed = bc.BuildFailed,
+                    PercentageComplete = bc.PercentageComplete
                 }).ToList();
             }
 

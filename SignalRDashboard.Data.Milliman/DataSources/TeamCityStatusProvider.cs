@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using SignalRDashboard.Data.Milliman.DataSources.Models.TeamCity;
 using TeamCitySharp;
+using TeamCitySharp.DomainEntities;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
 {
@@ -14,14 +17,14 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
         public TeamCityStatusProvider()
         {
-            _includedProjects.Add("Releases");
-            _includedProjects.Add("Documentation");
-            _includedProjects.Add("HTML");
-            _includedProjects.Add("Server");
-
-            var baseUrl = "acbuild2.cloudapp.net";
-            var username = "build.monitor";
-            var password = "Pairing0_!";
+            var config = ConfigurationManager.AppSettings;
+            var baseUrl = config["TeamCityUrl"];
+            var username = config["TeamCityUsername"];
+            var password = config["TeamCityPassword"];
+            foreach (var p in config["TeamCityIncludedProjects"].Split(','))
+            {
+                _includedProjects.Add(p);
+            }
 
             _client = new TeamCityClient(baseUrl, true);
             _client.Connect(username, password);
@@ -35,29 +38,37 @@ namespace SignalRDashboard.Data.Milliman.DataSources
                 {
                     var item = new ProjectData
                     {
-                        ProjectId = $"{project.Id}",
-                        ProjectName = $"{project.Name}",
-                        BuildConfigs = new List<BuildConfigData>()
+                        ProjectId = project.Id,
+                        ProjectName = project.Name,
+                        BuildConfigs = new List<BuildData>()
                     };
 
                     foreach (var config in _client.BuildConfigs.ByProjectId(project.Id))
                     {
-                        foreach (var build in _client.Builds.ByBuildConfigId(config.Id))
-                        {
-                            item.BuildConfigs.Add(new BuildConfigData
-                            {
-                                ConfigId = config.Id,
-                                ConfigName = $"{config.Name} - {build.Number} - {build.Status}"
-                            });
-                        }
-                        
+                        var latestBuild = _client.Builds.LastBuildByBuildConfigId(config.Id);
 
-                        _teamCityData.Add(item);
+                        item.BuildConfigs.Add(new BuildData
+                        {
+                            ConfigId = config.Id,
+                            ConfigName = config.Name,
+                            BuildNumber = latestBuild.Number,
+                            BuildFailed = latestBuild.Status == BuildStatus.Failure,
+                            PercentageComplete = GetBuildProgress(latestBuild)
+                        });
                     }
+
+                    _teamCityData.Add(item);
                 }
             }
 
             return _teamCityData;
+        }
+
+        private decimal GetBuildProgress(Build latestBuild)
+        {
+            var startTime = latestBuild.StartDate;
+
+            return 10 * new Random().Next(0, 10);
         }
 
     }
