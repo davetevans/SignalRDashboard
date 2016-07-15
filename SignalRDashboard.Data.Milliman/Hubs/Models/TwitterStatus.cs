@@ -16,5 +16,11 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
             get { return _tweetIsNew; }
             set { SetProperty(ref _tweetIsNew, value); }
         }
+        private string _lastTweetTime;
+        public string LastTweetTime
+        {
+            get { return _lastTweetTime; }
+            set { SetProperty(ref _lastTweetTime, value); }
+        }
     }
 }

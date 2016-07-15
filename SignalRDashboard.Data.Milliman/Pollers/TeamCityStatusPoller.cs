@@ -11,7 +11,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
     public class TeamCityStatusPoller : DatasourcePoller<TeamCityStatus, TeamCityStatusHub>
     {
         private static readonly Lazy<TeamCityStatusPoller> PollerInstance = new Lazy<TeamCityStatusPoller>(() => new TeamCityStatusPoller(GlobalHost.ConnectionManager.GetHubContext<TeamCityStatusHub>().Clients));
-        private readonly ITeamCityStatusProvider _provider;
+        private readonly TeamCityStatusProvider _provider;
 
         private TeamCityStatusPoller(IHubConnectionContext<dynamic> clients)
             : base(clients, TimeSpan.FromSeconds(15), new PollOnlyWhenUsersAreConnectedStrategy())

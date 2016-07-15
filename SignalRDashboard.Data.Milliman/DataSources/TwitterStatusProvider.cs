@@ -1,10 +1,9 @@
 ﻿using System.Configuration;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
-using SignalRDashboard.Data.Milliman.DataSources.Twitter;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
 {
-    public class TwitterStatusProvider : ITwitterStatusProvider
+    public class TwitterStatusProvider
     {
         private readonly bool _isInitialised = false;
         private readonly TwitterClient _client = new TwitterClient();

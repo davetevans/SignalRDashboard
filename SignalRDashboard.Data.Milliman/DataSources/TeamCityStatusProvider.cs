@@ -8,7 +8,7 @@ using TeamCitySharp.DomainEntities;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
 {
-    public class TeamCityStatusProvider : ITeamCityStatusProvider
+    public class TeamCityStatusProvider
     {
         private readonly bool _isInitialised = false;
         private readonly TeamCityClient _client;

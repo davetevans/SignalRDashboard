@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
-namespace SignalRDashboard.Data.Milliman.DataSources.Twitter
+namespace SignalRDashboard.Data.Milliman.DataSources
 {
     public class TwitterClient
     {
@@ -14,6 +14,8 @@ namespace SignalRDashboard.Data.Milliman.DataSources.Twitter
         public string OAuthConsumerSecret { get; set; }
         public string OAuthConsumerKey { get; set; }
         public string OAuthAccessToken { get; set; }
+
+        private const string TwitterDateTemplate = "ddd MMM dd HH:mm:ss +ffff yyyy";
 
         public async Task<TwitterStatusData> GetLatestTweet(string accessToken = null)
         {
@@ -37,11 +39,21 @@ namespace SignalRDashboard.Data.Milliman.DataSources.Twitter
                 var json = serializer.Deserialize<List<dynamic>>(await responseUserTimeLine.Content.ReadAsStringAsync());
                 resultData.LastTweetId = json == null ? 0 : (int)json[0]["id"];
                 resultData.LastTweet = json == null ? string.Empty : json[0]["text"];
+
+                var tweetDate = DateTime.Now;
+                if (json != null)
+                {
+                    tweetDate = DateTime.ParseExact(json[0]["created_at"], TwitterDateTemplate, new System.Globalization.CultureInfo("en-GB"));
+                    tweetDate = tweetDate.AddHours(1);
+                }
+
+                resultData.LastTweetDateTime = tweetDate;
             }
             catch (Exception ex)
             {
                 resultData.LastTweetId = -1;
                 resultData.LastTweet = ex.Message;
+                resultData.LastTweetDateTime = DateTime.Now;
             }
 
             return resultData;

@@ -10,14 +10,14 @@
     flex: 1;
     margin: 5px;
     padding: 5px;
-    border: 2px solid #FFF;
+    border: 2px solid #DDD;
     padding: 20px;
-    height: 650px;
-    overflow-y: auto;
+    /*height: 650px;
+    overflow-y: auto;*/
 }
 
 .flex-item-full {
     flex: 1 100%;
     margin: 5px;
-    border: 2px solid #FFF;
+    border: 2px solid #DDD;
 }

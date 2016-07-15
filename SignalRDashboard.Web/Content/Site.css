@@ -67,7 +67,7 @@ div.signalrdashboard-component span.success {
     color: #267F00;
 }
 
-div.signalrdashboard-component span.alert {
+div.signalrdashboard-component span.priority-alert {
     color: #FF6A00;
 }
     
@@ -95,7 +95,7 @@ div.signalrdashboard-component span.alert {
     }
 }
 
-@keyframes pulsate-alert {
+@keyframes pulsate-priority-alert {
     0% {
         background-color:rgba(255,122,13,1);
     }
@@ -115,11 +115,11 @@ div.signalrdashboard-component div.warning {
     animation-name: pulsate-warning;
 }
 
-div.signalrdashboard-component div.alert {
-    animation-name: pulsate-alert;
+div.signalrdashboard-component div.priority-alert {
+    animation-name: pulsate-priority-alert;
 }
 
-div.signalrdashboard-component div.error, div.signalrdashboard-component div.error-long, div.signalrdashboard-component div.warning, div.signalrdashboard-component div.alert {
+div.signalrdashboard-component div.error, div.signalrdashboard-component div.error-long, div.signalrdashboard-component div.warning, div.signalrdashboard-component div.priority-alert {
     animation-duration: 1s;
     animation-direction: linear;
     animation-timing-function: ease-in-out;
@@ -134,7 +134,7 @@ div.error-long {
      animation-iteration-count: 2;
 }
 
-div.error, div.alert {
+div.error, div.priority-alert {
      animation-iteration-count: 5;
 }
 
@@ -162,13 +162,13 @@ footer {
     font-size: 2em;
     font-weight: 800;
     text-align: center;
-    padding-top: 10px;
+    padding: 10px;
 }
 
 .box {
     font-size: 1em;
     font-weight: 800;
-    padding: 5px;
+    padding: 10px 10px;
 }
 
 .box-header {

@@ -7,7 +7,7 @@
                 signalrdashboard.core.ControlsComponent,
                 signalrdashboard.milliman.TeamCityStatusComponent,
                 signalrdashboard.milliman.TwitterStatusComponent,
-                signalrdashboard.demo.BuildMetricsComponent
+                signalrdashboard.milliman.AzureStatusComponent
             ]
           }    
       )
@@ -16,9 +16,3 @@
           }          
       });
 })(window.signalrdashboard || (window.signalrdashboard = {}));
-
-/*
-                signalrdashboard.core.ConnectedUsersComponent,
-                signalrdashboard.demo.SiteStatisticsComponent,
-                signalrdashboard.demo.SiteStatusComponent
-*/

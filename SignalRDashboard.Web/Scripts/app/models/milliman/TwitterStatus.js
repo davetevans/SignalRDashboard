@@ -3,7 +3,8 @@
 
     function TwitterStatus() {
         // Properties matching data model received via SignalR
-        this.lastTweet = "";
+        this.lastTweet = '';
+        this.lastTweetTime = '';
         this.tweetIsNew = false;
 
         // Error tracking properties
