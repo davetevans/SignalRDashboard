@@ -78,6 +78,14 @@
                 });
             }
         },
+
+        playCustom : function(component, customText) {
+            if (canPlaySound(SoundCategory.Error)) {
+                $.get("Media/GetCustomErrorSound", { component: component, customText: customText }, function(response) {
+                    playSound(response, SoundCategory.Error);
+                });
+            }
+        },
         
         silence: stopSound,
 

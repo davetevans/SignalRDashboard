@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using SignalRDashboard.Data.Milliman.DataSources.Models.TeamCity;
-using TeamCitySharp;
-using TeamCitySharp.DomainEntities;
+using FluentTc;
+using FluentTc.Domain;
+using FluentTc.Locators;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
 {
     public class TeamCityStatusProvider
     {
         private readonly bool _isInitialised = false;
-        private readonly TeamCityClient _client;
         private readonly IList<ProjectData> _teamCityData = new List<ProjectData>();
         private readonly List<string> _includedProjects = new List<string>();
+        private readonly IConnectedTc _client;
 
         public TeamCityStatusProvider()
         {
@@ -25,50 +26,67 @@ namespace SignalRDashboard.Data.Milliman.DataSources
             {
                 _includedProjects.Add(p);
             }
-
-            _client = new TeamCityClient(baseUrl, true);
-            _client.Connect(username, password);
+            
+            _client = new RemoteTc().Connect(a => a.ToHost(baseUrl).UseSsl().AsUser(username, password));
         }
         
         public IEnumerable<ProjectData> GetTeamCityStatus()
         {
             if (!_isInitialised)
             {
-                foreach (var project in _client.Projects.All().Where(p => _includedProjects.Contains(p.Name)))
+                _teamCityData.Clear();
+
+                try
                 {
-                    var item = new ProjectData
+                    foreach (var project in _client.GetAllProjects().Where(p => _includedProjects.Contains(p.Name)))
                     {
-                        ProjectId = project.Id,
-                        ProjectName = project.Name,
-                        BuildConfigs = new List<BuildData>()
-                    };
-
-                    foreach (var config in _client.BuildConfigs.ByProjectId(project.Id))
-                    {
-                        var latestBuild = _client.Builds.LastBuildByBuildConfigId(config.Id);
-
-                        item.BuildConfigs.Add(new BuildData
+                        var item = new ProjectData
                         {
-                            ConfigId = config.Id,
-                            ConfigName = config.Name,
-                            BuildNumber = latestBuild.Number,
-                            BuildFailed = latestBuild.Status == BuildStatus.Failure,
-                            PercentageComplete = GetBuildProgress(latestBuild)
-                        });
+                            ProjectId = project.Id,
+                            ProjectName = project.Name,
+                            BuildConfigs = new List<BuildData>()
+                        };
+                        
+                        foreach (var config in _client.GetBuildConfigurations(_ => _.Project(__ => __.Id(project.Id))))
+                        {
+                            var latestBuild = _client.GetLastBuild(_ => _.BuildConfiguration(__ => __.Id(config.Id)));
+
+                            item.BuildConfigs.Add(new BuildData
+                            {
+                                ConfigId = config.Id,
+                                ConfigName = config.Name,
+                                BuildNumber = latestBuild.Number,
+                                BuildFailed = latestBuild.Status != BuildStatus.Success,
+                                BuildTime = GetBuildProgress(latestBuild)
+                            });
+                        }
+
+                        _teamCityData.Add(item);
                     }
 
-                    _teamCityData.Add(item);
+                }
+                catch (Exception ex)
+                {
+                    // do nothing as loss of connection to teamCity is handled elsewhere
+                    var sdf = ex;
                 }
             }
 
             return _teamCityData;
         }
 
-        private decimal GetBuildProgress(Build latestBuild)
+        private static string GetBuildProgress(IBuild latestBuild)
         {
-            var startTime = latestBuild.StartDate;
+            var progress = string.Empty;
 
-            return 10 * new Random().Next(0, 10);
+            // if build is running get the time taken
+            if (latestBuild.FinishDate >= DateTime.Now)
+            {
+                var buildRunTime = DateTime.Now - latestBuild.StartDate;
+                progress = $"{buildRunTime.Minutes}:{buildRunTime.Seconds}";
+            }
+
+            return progress;
         }
 
     }

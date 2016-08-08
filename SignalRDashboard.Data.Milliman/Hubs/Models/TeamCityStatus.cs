@@ -13,45 +13,68 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
 
         private readonly List<TeamCityProject> _projects = new List<TeamCityProject>();
 
-        public void UpdateOrAddProject(ProjectData p)
+        public void UpdateOrAddProject(ProjectData webProject)
         {
-            var project = _projects.FirstOrDefault(s => s.ProjectId == p.ProjectId);
-            if (project == null)
+            var dashProject = _projects.FirstOrDefault(s => s.ProjectId == webProject.ProjectId);
+            if (dashProject == null)
             {
-                project = new TeamCityProject
+                dashProject = new TeamCityProject
                 {
-                    ProjectId = p.ProjectId,
-                    ProjectName = p.ProjectName,
-                    BuildConfigs = p.BuildConfigs.Select(bc => new TeamCityBuildConfig
+                    ProjectId = webProject.ProjectId,
+                    ProjectName = webProject.ProjectName,
+                    BuildConfigs = webProject.BuildConfigs.Select(bc => new TeamCityBuildConfig
                     {
                         ConfigId = bc.ConfigId,
                         ConfigName = bc.ConfigName,
                         BuildNumber = bc.BuildNumber,
                         BuildFailed = bc.BuildFailed,
-                        PercentageComplete = bc.PercentageComplete
+                        BuildTime = bc.BuildTime
                     }).ToList()
                 };
-                _projects.Add(project);
+                _projects.Add(dashProject);
                 HasChanged = true;
             }
             else
             {
-                project.ProjectId = p.ProjectId;
-                project.ProjectName = p.ProjectName;
-                project.BuildConfigs = p.BuildConfigs.Select(bc => new TeamCityBuildConfig
+                dashProject.ProjectId = webProject.ProjectId;
+                dashProject.ProjectName = webProject.ProjectName;
+
+                foreach (var webBuild in webProject.BuildConfigs)
                 {
-                    ConfigId = bc.ConfigId,
-                    ConfigName = bc.ConfigName,
-                    BuildNumber = bc.BuildNumber,
-                    BuildFailed = bc.BuildFailed,
-                    PercentageComplete = bc.PercentageComplete
-                }).ToList();
+                    UpdateOrAddBuildConfig(dashProject, webBuild);
+                }
             }
 
-            HasChanged = HasChanged || project.HasChanged;
+            HasChanged = HasChanged || dashProject.HasChanged;
         }
 
-        public override void ResetChangedState()
+        private void UpdateOrAddBuildConfig(TeamCityProject dashProject, BuildData webBuild)
+        {
+            var dashBuild = dashProject.BuildConfigs.FirstOrDefault(s => s.ConfigId == webBuild.ConfigId);
+            if (dashBuild == null)
+            {
+                dashProject.BuildConfigs.Add(new TeamCityBuildConfig
+                {
+                    ConfigId = webBuild.ConfigId,
+                    ConfigName = webBuild.ConfigName,
+                    BuildNumber = webBuild.BuildNumber,
+                    BuildFailed = webBuild.BuildFailed,
+                    BuildTime = webBuild.BuildTime
+                });
+                HasChanged = true;
+            }
+            else
+            {
+                dashBuild.ConfigId = webBuild.ConfigId;
+                dashBuild.ConfigName = webBuild.ConfigName;
+                dashBuild.BuildNumber = webBuild.BuildNumber;
+                dashBuild.BuildFailed = webBuild.BuildFailed;
+                dashBuild.BuildTime = webBuild.BuildTime;
+            }
+        }
+
+        public override
+            void ResetChangedState()
         {
             HasChanged = false;
             foreach (var project in _projects)

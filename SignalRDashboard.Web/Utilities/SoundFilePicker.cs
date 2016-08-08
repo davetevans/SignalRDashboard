@@ -27,7 +27,7 @@ namespace SignalRDashboard.Web.Utilities
             return $"{_rootFolder}\\{subfolder}";
         }
        
-        public string GetRandomSoundFile(string component, SoundFileCategory category)
+        public string GetRandomSoundFile(string component, SoundFileCategory category, string keyword)
         {
             string subfolder = FormatSubFolder(component, category);
             string fullFolderPath = FormatFullFolder(subfolder);
@@ -35,13 +35,18 @@ namespace SignalRDashboard.Web.Utilities
             {
                 DirectoryFileCache cache = _fileCaches.GetOrAdd(subfolder, sf => new DirectoryFileCache(fullFolderPath));
                 if (cache.ContainsFiles) {
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        return cache.Files.FirstOrDefault(f => f.Contains(keyword));
+                    }
+
                     var random = new Random();
                     return cache.Files.Skip(random.Next(0, cache.Files.Count() - 1)).FirstOrDefault();
                 }
             }
 
             if (!component.Equals("Generic", StringComparison.CurrentCultureIgnoreCase))
-                return GetRandomSoundFile("Generic", category);
+                return GetRandomSoundFile("Generic", category, null);
 
             return String.Empty;
         }

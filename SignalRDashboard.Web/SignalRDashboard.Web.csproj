@@ -90,7 +90,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.2.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
       <Private>True</Private>
@@ -125,8 +134,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -171,9 +178,6 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
@@ -259,13 +263,24 @@
   <ItemGroup>
     <Content Include="Content\Custom.css" />
     <Content Include="Content\Demo.css" />
+    <Content Include="Content\images\azure_off.png" />
+    <Content Include="Content\images\azure_on.png" />
+    <Content Include="Content\images\internet_off.png" />
+    <Content Include="Content\images\internet_on.png" />
+    <Content Include="Content\images\teamcity_off.png" />
+    <Content Include="Content\images\teamcity_on.png" />
     <Content Include="Content\images\van.png" />
     <Content Include="Content\Sounds\DemoBuildMetrics\Success\SmallCrowdApplause.mp3" />
+    <Content Include="Content\Sounds\NetworkStatus\Error\AirHorn.mp3" />
+    <Content Include="Content\Sounds\NetworkStatus\Success\TaDa.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\AirHorn.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Success\TaDa.mp3" />
     <Content Include="Scripts\angular2-beta0\es6-shim.min.js" />
     <Content Include="Scripts\app\components\AppComponent.js" />
     <Content Include="Scripts\app\components\core\ConnectedUsersComponent.js" />
     <Content Include="Scripts\app\components\milliman\TeamCityStatusComponent.js" />
     <Content Include="Scripts\app\components\milliman\AzureStatusComponent.js" />
+    <Content Include="Scripts\app\components\milliman\NetworkStatusComponent.js" />
     <Content Include="Scripts\app\components\milliman\TwitterStatusComponent.js" />
     <Content Include="Scripts\app\components\demo\BuildMetricsComponent.js" />
     <Content Include="Scripts\app\components\demo\SiteStatisticsComponent.js" />
@@ -273,9 +288,11 @@
     <Content Include="Scripts\app\models\demo\BuildMetrics.js" />
     <Content Include="Scripts\app\models\demo\SiteStatistics.js" />
     <Content Include="Scripts\app\models\milliman\AzureStatus.js" />
+    <Content Include="Scripts\app\models\milliman\NetworkStatus.js" />
     <Content Include="Scripts\app\models\milliman\TwitterStatus.js" />
     <Content Include="Scripts\app\templates\milliman\TeamCityStatusComponent.html" />
     <Content Include="Scripts\app\templates\milliman\AzureStatusComponent.html" />
+    <Content Include="Scripts\app\templates\milliman\NetworkStatusComponent.html" />
     <Content Include="Scripts\app\templates\milliman\TwitterStatusComponent.html" />
     <Content Include="Scripts\app\templates\core\ControlsComponent.html" />
     <Content Include="Scripts\app\components\demo\SiteStatusComponent.js" />
@@ -298,6 +315,8 @@
     <Content Include="Scripts\angular2-beta0\angular2-all.umd.dev.js" />
     <Content Include="Scripts\angular2-beta0\angular2-polyfills.js" />
     <Content Include="Scripts\angular2-beta0\Rx.umd.js" />
+    <None Include="Properties\PublishProfiles\DTE local.pubxml" />
+    <None Include="Properties\PublishProfiles\DTE.pubxml" />
     <None Include="Properties\PublishProfiles\FIleSystem.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\dashboard.js" />

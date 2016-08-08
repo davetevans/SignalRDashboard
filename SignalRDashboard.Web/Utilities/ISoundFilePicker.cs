@@ -2,6 +2,6 @@
 {
     public interface ISoundFilePicker
     {
-        string GetRandomSoundFile(string component, SoundFileCategory category);
+        string GetRandomSoundFile(string component, SoundFileCategory category, string keyword);
     }
 }

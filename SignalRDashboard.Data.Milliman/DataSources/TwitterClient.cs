@@ -52,7 +52,7 @@ namespace SignalRDashboard.Data.Milliman.DataSources
             catch (Exception ex)
             {
                 resultData.LastTweetId = -1;
-                resultData.LastTweet = ex.Message;
+                resultData.LastTweet = "Check Network Status!";
                 resultData.LastTweetDateTime = DateTime.Now;
             }
 

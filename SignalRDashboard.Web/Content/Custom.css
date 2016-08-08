@@ -3,15 +3,13 @@
     flex-flow: row wrap;
     justify-content: space-around;
     align-items: flex-start;
-    margin: 10px;
 }
 
 .flex-item {
     flex: 1;
     margin: 5px;
-    padding: 5px;
-    border: 2px solid #DDD;
     padding: 20px;
+    border: 1px solid #DDD;
     /*height: 650px;
     overflow-y: auto;*/
 }
@@ -19,5 +17,12 @@
 .flex-item-full {
     flex: 1 100%;
     margin: 5px;
-    border: 2px solid #DDD;
+    border: 1px solid #DDD;
+}
+
+.flex-item-slim {
+    flex: 1;
+    margin: 5px;
+    padding: 10px;
+    border: 0 solid #666;
 }

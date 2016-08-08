@@ -9,7 +9,11 @@
                 if (isError !== thisModel[thisCheck.targetProperty]) {
                     thisModel[thisCheck.targetProperty] = isError;
                     if (isError) {
-                        signalrdashboard.soundPlayer.playError(component);
+                        if (component === 'TwitterStatus') {
+                            signalrdashboard.soundPlayer.playCustom(component, thisModel.lastTweet);
+                        } else {
+                            signalrdashboard.soundPlayer.playError(component);
+                        }
                     } else {
                         signalrdashboard.soundPlayer.playSuccess(component);
                     }

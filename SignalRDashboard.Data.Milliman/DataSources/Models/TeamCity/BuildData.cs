@@ -6,6 +6,6 @@
         public string ConfigName { get; set; }
         public string BuildNumber { get; set; }
         public bool BuildFailed { get; set; }
-        public decimal PercentageComplete { get; set; }
+        public string BuildTime { get; set; }
     }
 }

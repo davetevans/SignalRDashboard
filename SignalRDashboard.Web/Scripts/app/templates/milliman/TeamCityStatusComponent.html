@@ -10,7 +10,7 @@
         </div>
         <div *ngFor="#config of project.buildConfigs" class="row" [class.error]="config.buildFailed">
             <div class="col-lg-6">
-                {{config.configName}} - {{config.percentageComplete}}
+                {{config.configName}} <span [hidden]="!buildTime">- {{config.buildTime}}</span>
             </div>
             <div class="col-lg-6">
                 <span class="xsmall">{{config.buildNumber}}</span>

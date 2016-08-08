@@ -8,7 +8,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity
         private string _configName;
         private string _buildNumber;
         private bool _buildFailed;
-        private decimal _percentageComplete;
+        private string _buildTime;
 
         public string ConfigId
         {
@@ -34,10 +34,10 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity
             set { SetProperty(ref _buildFailed, value); }
         }
 
-        public decimal PercentageComplete
+        public string BuildTime
         {
-            get { return _percentageComplete; }
-            set { SetProperty(ref _percentageComplete, value); }
+            get { return _buildTime; }
+            set { SetProperty(ref _buildTime, value); }
         }
     }
 }
