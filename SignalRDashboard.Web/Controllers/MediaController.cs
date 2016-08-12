@@ -44,6 +44,11 @@ namespace SignalRDashboard.Web.Controllers
 
         private string KeywordSelector(string customText)
         {
+            if (customText == null)
+            {
+                return null;
+            }
+
             if (customText.Contains("coffee") || customText.Contains("cafe"))
             {
                 return "Coffee";
@@ -54,9 +59,14 @@ namespace SignalRDashboard.Web.Controllers
                 return "Curry";
             }
 
-            if (customText.Contains("french") || customText.Contains("terrace"))
+            if (customText.Contains("french"))
             {
                 return "French";
+            }
+
+            if (customText.Contains("terrace"))
+            {
+                return "Trombone";
             }
 
             if (customText.Contains("ice") || customText.Contains("cream"))

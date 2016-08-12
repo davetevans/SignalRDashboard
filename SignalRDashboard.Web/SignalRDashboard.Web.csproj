@@ -270,11 +270,6 @@
     <Content Include="Content\images\teamcity_off.png" />
     <Content Include="Content\images\teamcity_on.png" />
     <Content Include="Content\images\van.png" />
-    <Content Include="Content\Sounds\DemoBuildMetrics\Success\SmallCrowdApplause.mp3" />
-    <Content Include="Content\Sounds\NetworkStatus\Error\AirHorn.mp3" />
-    <Content Include="Content\Sounds\NetworkStatus\Success\TaDa.mp3" />
-    <Content Include="Content\Sounds\TwitterStatus\Error\AirHorn.mp3" />
-    <Content Include="Content\Sounds\TwitterStatus\Success\TaDa.mp3" />
     <Content Include="Scripts\angular2-beta0\es6-shim.min.js" />
     <Content Include="Scripts\app\components\AppComponent.js" />
     <Content Include="Scripts\app\components\core\ConnectedUsersComponent.js" />
@@ -306,8 +301,6 @@
     <Content Include="Content\images\stop-unavailable.png" />
     <Content Include="Content\images\stop.png" />
     <Content Include="Content\images\unmute.png" />
-    <Content Include="Content\Sounds\Generic\Error\AirHorn.mp3" />
-    <Content Include="Content\Sounds\Generic\Success\TaDa.mp3" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -362,6 +355,13 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Sounds\DemoBuildMetrics\Error\" />
+    <Folder Include="Content\Sounds\DemoBuildMetrics\Success\" />
+    <Folder Include="Content\Sounds\Generic\Error\" />
+    <Folder Include="Content\Sounds\Generic\Success\" />
+    <Folder Include="Content\Sounds\NetworkStatus\Error\" />
+    <Folder Include="Content\Sounds\NetworkStatus\Success\" />
+    <Folder Include="Content\Sounds\TwitterStatus\Error\" />
+    <Folder Include="Content\Sounds\TwitterStatus\Success\" />
     <Folder Include="Views\Media\" />
   </ItemGroup>
   <ItemGroup>

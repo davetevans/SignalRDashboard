@@ -44,7 +44,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     UpdateOrAddBuildConfig(dashProject, webBuild);
                 }
             }
-
+            
             HasChanged = HasChanged || dashProject.HasChanged;
         }
 
@@ -70,6 +70,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 dashBuild.BuildNumber = webBuild.BuildNumber;
                 dashBuild.BuildFailed = webBuild.BuildFailed;
                 dashBuild.BuildTime = webBuild.BuildTime;
+                HasChanged = dashBuild.HasChanged;
             }
         }
 

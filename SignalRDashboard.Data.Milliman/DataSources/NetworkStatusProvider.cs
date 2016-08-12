@@ -31,8 +31,8 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
             try
             {
-                var pingGoogle = ping.Send("www.google.com", 4000);
-                var pingTwitter = ping.Send("www.twitter.com", 4000);
+                var pingGoogle = ping.Send("www.google.com", 5000);
+                var pingTwitter = ping.Send("www.twitter.com", 5000);
                 internetResult = pingGoogle?.Status == IPStatus.Success && pingTwitter?.Status == IPStatus.Success;
             }
             catch (Exception ex)

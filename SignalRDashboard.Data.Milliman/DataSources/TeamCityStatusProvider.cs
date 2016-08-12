@@ -50,7 +50,7 @@ namespace SignalRDashboard.Data.Milliman.DataSources
                         foreach (var config in _client.GetBuildConfigurations(_ => _.Project(__ => __.Id(project.Id))))
                         {
                             var latestBuild = _client.GetLastBuild(_ => _.BuildConfiguration(__ => __.Id(config.Id)));
-
+                            
                             item.BuildConfigs.Add(new BuildData
                             {
                                 ConfigId = config.Id,
@@ -68,7 +68,6 @@ namespace SignalRDashboard.Data.Milliman.DataSources
                 catch (Exception ex)
                 {
                     // do nothing as loss of connection to teamCity is handled elsewhere
-                    var sdf = ex;
                 }
             }
 

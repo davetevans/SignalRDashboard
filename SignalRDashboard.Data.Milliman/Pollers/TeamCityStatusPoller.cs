@@ -21,7 +21,8 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         
         protected override void RefreshData(TeamCityStatus model)
         {
-            foreach (var project in _provider.GetTeamCityStatus())
+            var latestData = _provider.GetTeamCityStatus();
+            foreach (var project in latestData)
             {
                 model.UpdateOrAddProject(project);
             }
@@ -31,7 +32,8 @@ namespace SignalRDashboard.Data.Milliman.Pollers
 
         protected override void BroadcastData(TeamCityStatus model)
         {
-            Clients.All.updateTeamCityStatus(model.GetProjects);
+            var updatedProjects = model.GetProjects;
+            Clients.All.updateTeamCityStatus(updatedProjects);
         }
     }
 }
