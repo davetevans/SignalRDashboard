@@ -275,3 +275,10 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Java files
+*.jar
+
+# Web Config files
+Web.config
+Web.*.config
