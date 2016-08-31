@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using FluentTc;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
@@ -11,6 +13,7 @@ namespace SignalRDashboard.Data.Milliman.DataSources
     {
         private readonly bool _isInitialised = false;
         private readonly NetworkStatusData _networkData = new NetworkStatusData();
+        private static readonly string[] Addresses = { "google.com", "twitter.com" };
 
         public NetworkStatusData GetNetworkStatus()
         {
@@ -26,21 +29,37 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
         private static bool CheckInternetConnection()
         {
-            var ping = new Ping();
             bool internetResult;
 
             try
             {
-                var pingGoogle = ping.Send("www.google.com", 5000);
-                var pingTwitter = ping.Send("www.twitter.com", 5000);
-                internetResult = pingGoogle?.Status == IPStatus.Success && pingTwitter?.Status == IPStatus.Success;
+                var pingTasks = Addresses.Select(PingAsync).ToList();
+
+                Task.WaitAll(pingTasks.ToArray());
+
+                var pingResults = pingTasks.Select(pingTask => pingTask.Result.Status == IPStatus.Success).ToList();
+
+                internetResult = pingResults.TrueForAll(p => true);
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 internetResult = false;
             }
 
             return internetResult;
+        }
+
+        private static Task<PingReply> PingAsync(string address)
+        {
+            var tcs = new TaskCompletionSource<PingReply>();
+            var ping = new Ping();
+            ping.PingCompleted += (obj, sender) =>
+            {
+                tcs.SetResult(sender.Reply);
+            };
+            ping.SendAsync(address, new object());
+            return tcs.Task;
         }
 
         private static bool CheckAzureConnection()

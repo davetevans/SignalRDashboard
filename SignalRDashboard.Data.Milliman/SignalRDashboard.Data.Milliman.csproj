@@ -136,9 +136,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataSources\AzureClient.cs" />
-    <Compile Include="DataSources\Models\TeamCity\BuildData.cs" />
-    <Compile Include="DataSources\Models\TeamCity\ProjectData.cs" />
+    <Compile Include="Clients\TeamCityClient.cs" />
+    <Compile Include="Clients\AzureClient.cs" />
+    <Compile Include="Clients\TeamCity\BuildProgress.cs" />
+    <Compile Include="Clients\TeamCity\BuildResult.cs" />
+    <Compile Include="Clients\TeamCity\BuildStatus.cs" />
+    <Compile Include="Clients\TeamCity\BuildType.cs" />
+    <Compile Include="Clients\TeamCity\BuildProject.cs" />
+    <Compile Include="Clients\TeamCity\FullBuildResult.cs" />
+    <Compile Include="Clients\TeamCity\HttpXmlAccessor.cs" />
+    <Compile Include="Clients\TeamCity\Summary.cs" />
+    <Compile Include="DataSources\Models\TeamCityBuildConfigData.cs" />
+    <Compile Include="DataSources\Models\TeamCityProjectData.cs" />
     <Compile Include="DataSources\Models\AzureStatusData.cs" />
     <Compile Include="DataSources\Models\NetworkStatusData.cs" />
     <Compile Include="DataSources\Models\TwitterStatusData.cs" />
@@ -146,9 +155,9 @@
     <Compile Include="DataSources\AzureStatusProvider.cs" />
     <Compile Include="DataSources\NetworkStatusProvider.cs" />
     <Compile Include="DataSources\TwitterStatusProvider.cs" />
-    <Compile Include="DataSources\TwitterClient.cs" />
-    <Compile Include="Hubs\Models\TeamCity\TeamCityBuildConfig.cs" />
-    <Compile Include="Hubs\Models\TeamCity\TeamCityProject.cs" />
+    <Compile Include="Clients\TwitterClient.cs" />
+    <Compile Include="Hubs\Models\TeamCity\TeamCityBuildConfigStatus.cs" />
+    <Compile Include="Hubs\Models\TeamCity\TeamCityProjectStatus.cs" />
     <Compile Include="Hubs\Models\TeamCityStatus.cs" />
     <Compile Include="Hubs\Models\AzureStatus.cs" />
     <Compile Include="Hubs\Models\TwitterStatus.cs" />

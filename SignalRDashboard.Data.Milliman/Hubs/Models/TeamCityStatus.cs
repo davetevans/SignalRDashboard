@@ -2,33 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SignalRDashboard.Data.Core.Hubs.Models;
-using SignalRDashboard.Data.Milliman.DataSources.Models.TeamCity;
+using SignalRDashboard.Data.Milliman.DataSources.Models;
 using SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity;
 
 namespace SignalRDashboard.Data.Milliman.Hubs.Models
 {
-    public class TeamCityStatus : DashboardHubModel, IEnumerable<TeamCityProject>
+    public class TeamCityStatus : DashboardHubModel, IEnumerable<TeamCityProjectStatus>
     {
         public override bool HasChanged { get; protected set; }
 
-        private readonly List<TeamCityProject> _projects = new List<TeamCityProject>();
+        private readonly List<TeamCityProjectStatus> _projects = new List<TeamCityProjectStatus>();
 
-        public void UpdateOrAddProject(ProjectData webProject)
+        public void UpdateOrAddProject(TeamCityProjectData webProject)
         {
             var dashProject = _projects.FirstOrDefault(s => s.ProjectId == webProject.ProjectId);
             if (dashProject == null)
             {
-                dashProject = new TeamCityProject
+                dashProject = new TeamCityProjectStatus
                 {
                     ProjectId = webProject.ProjectId,
                     ProjectName = webProject.ProjectName,
-                    BuildConfigs = webProject.BuildConfigs.Select(bc => new TeamCityBuildConfig
+                    BuildConfigs = webProject.BuildConfigs.Select(bc => new TeamCityBuildConfigStatus
                     {
                         ConfigId = bc.ConfigId,
                         ConfigName = bc.ConfigName,
                         BuildNumber = bc.BuildNumber,
                         BuildFailed = bc.BuildFailed,
-                        BuildTime = bc.BuildTime
+                        PercentageComplete = bc.PercentageComplete
                     }).ToList()
                 };
                 _projects.Add(dashProject);
@@ -48,18 +48,19 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
             HasChanged = HasChanged || dashProject.HasChanged;
         }
 
-        private void UpdateOrAddBuildConfig(TeamCityProject dashProject, BuildData webBuild)
+        private void UpdateOrAddBuildConfig(TeamCityProjectStatus dashProject, TeamCityBuildConfigData webBuild)
         {
             var dashBuild = dashProject.BuildConfigs.FirstOrDefault(s => s.ConfigId == webBuild.ConfigId);
             if (dashBuild == null)
             {
-                dashProject.BuildConfigs.Add(new TeamCityBuildConfig
+                dashProject.BuildConfigs.Add(new TeamCityBuildConfigStatus
                 {
                     ConfigId = webBuild.ConfigId,
                     ConfigName = webBuild.ConfigName,
                     BuildNumber = webBuild.BuildNumber,
                     BuildFailed = webBuild.BuildFailed,
-                    BuildTime = webBuild.BuildTime
+                    BuildRunning = webBuild.BuildRunning,
+                    PercentageComplete = webBuild.PercentageComplete
                 });
                 HasChanged = true;
             }
@@ -69,7 +70,8 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 dashBuild.ConfigName = webBuild.ConfigName;
                 dashBuild.BuildNumber = webBuild.BuildNumber;
                 dashBuild.BuildFailed = webBuild.BuildFailed;
-                dashBuild.BuildTime = webBuild.BuildTime;
+                dashBuild.BuildRunning = webBuild.BuildRunning;
+                dashBuild.PercentageComplete = webBuild.PercentageComplete;
                 HasChanged = dashBuild.HasChanged;
             }
         }
@@ -84,9 +86,9 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
             }
         }
 
-        public TeamCityProject[] GetProjects => _projects.ToArray();
+        public TeamCityProjectStatus[] GetProjects => _projects.ToArray();
 
-        public IEnumerator<TeamCityProject> GetEnumerator()
+        public IEnumerator<TeamCityProjectStatus> GetEnumerator()
         {
             return _projects.GetEnumerator();
         }

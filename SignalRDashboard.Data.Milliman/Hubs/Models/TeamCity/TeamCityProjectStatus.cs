@@ -3,11 +3,11 @@ using SignalRDashboard.Data.Core.Hubs.Models;
 
 namespace SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity
 {
-    public class TeamCityProject : DashboardHubModel
+    public class TeamCityProjectStatus : DashboardHubModel
     {
         private string _projectId;
         private string _projectName;
-        private IList<TeamCityBuildConfig> _buildConfigs; 
+        private IList<TeamCityBuildConfigStatus> _buildConfigs; 
 
         public string ProjectId
         {
@@ -21,7 +21,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity
             set { SetProperty(ref _projectName, value); }
         }
 
-        public IList<TeamCityBuildConfig> BuildConfigs
+        public IList<TeamCityBuildConfigStatus> BuildConfigs
         {
             get { return _buildConfigs; }
             set { SetProperty(ref _buildConfigs, value); }

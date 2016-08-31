@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using SignalRDashboard.Data.Milliman.Clients;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
 namespace SignalRDashboard.Data.Milliman.DataSources

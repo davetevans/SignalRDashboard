@@ -317,6 +317,7 @@
     <Content Include="Scripts\app\templates\demo\BuildMetricsComponent.html" />
     <Content Include="Scripts\app\templates\demo\SiteStatisticsComponent.html" />
     <Content Include="Scripts\app\templates\demo\SiteStatusComponent.html" />
+    <Content Include="Scripts\app\utilities\milliman\angular-extensions.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

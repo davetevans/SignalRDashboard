@@ -1,36 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using SignalRDashboard.Data.Milliman.DataSources.Models.TeamCity;
-using FluentTc;
-using FluentTc.Domain;
-using FluentTc.Locators;
+using SignalRDashboard.Data.Milliman.DataSources.Models;
+using SignalRDashboard.Data.Milliman.Clients;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
 {
     public class TeamCityStatusProvider
     {
         private readonly bool _isInitialised = false;
-        private readonly IList<ProjectData> _teamCityData = new List<ProjectData>();
+        private readonly IList<TeamCityProjectData> _teamCityData = new List<TeamCityProjectData>();
         private readonly List<string> _includedProjects = new List<string>();
-        private readonly IConnectedTc _client;
+        private readonly TeamCityClient _client;
 
         public TeamCityStatusProvider()
         {
             var config = ConfigurationManager.AppSettings;
-            var baseUrl = config["TeamCityUrl"];
-            var username = config["TeamCityUsername"];
-            var password = config["TeamCityPassword"];
+
+            _client = new TeamCityClient
+            {
+                TeamCityUrl = config["TeamCityUrl"],
+                TeamCityUsername = config["TeamCityUsername"],
+                TeamCityPassword = config["TeamCityPassword"]
+            };
+
+            _client.Init();
+
             foreach (var p in config["TeamCityIncludedProjects"].Split(','))
             {
                 _includedProjects.Add(p);
             }
-            
-            _client = new RemoteTc().Connect(a => a.ToHost(baseUrl).UseSsl().AsUser(username, password));
         }
         
-        public IEnumerable<ProjectData> GetTeamCityStatus()
+        public IEnumerable<TeamCityProjectData> GetTeamCityStatus()
         {
             if (!_isInitialised)
             {
@@ -38,55 +40,20 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
                 try
                 {
-                    foreach (var project in _client.GetAllProjects().Where(p => _includedProjects.Contains(p.Name)))
+                    foreach (var project in _client.GetIncludedProjects(_includedProjects))
                     {
-                        var item = new ProjectData
-                        {
-                            ProjectId = project.Id,
-                            ProjectName = project.Name,
-                            BuildConfigs = new List<BuildData>()
-                        };
-                        
-                        foreach (var config in _client.GetBuildConfigurations(_ => _.Project(__ => __.Id(project.Id))))
-                        {
-                            var latestBuild = _client.GetLastBuild(_ => _.BuildConfiguration(__ => __.Id(config.Id)));
-                            
-                            item.BuildConfigs.Add(new BuildData
-                            {
-                                ConfigId = config.Id,
-                                ConfigName = config.Name,
-                                BuildNumber = latestBuild.Number,
-                                BuildFailed = latestBuild.Status != BuildStatus.Success,
-                                BuildTime = GetBuildProgress(latestBuild)
-                            });
-                        }
-
-                        _teamCityData.Add(item);
+                        _teamCityData.Add(project);
                     }
 
                 }
                 catch (Exception ex)
                 {
+                    var exx = ex;
                     // do nothing as loss of connection to teamCity is handled elsewhere
                 }
             }
 
             return _teamCityData;
         }
-
-        private static string GetBuildProgress(IBuild latestBuild)
-        {
-            var progress = string.Empty;
-
-            // if build is running get the time taken
-            if (latestBuild.FinishDate >= DateTime.Now)
-            {
-                var buildRunTime = DateTime.Now - latestBuild.StartDate;
-                progress = $"{buildRunTime.Minutes}:{buildRunTime.Seconds}";
-            }
-
-            return progress;
-        }
-
     }
 }

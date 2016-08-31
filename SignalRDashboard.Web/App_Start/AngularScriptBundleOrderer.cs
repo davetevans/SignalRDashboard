@@ -10,6 +10,7 @@ namespace SignalRDashboard.Web
         {
             const string modelsBaseDirectory = "~/scripts/app/models\\";
             const string componentsBaseDirectory = "~/scripts/app/components\\";
+            const string utilitiesBaseDirectory = "~/scripts/app/utilities\\";
             const string appComponentJs = "~/scripts/app/components\\AppComponent.js";
             const string dashboardCoreJs = "~/scripts/app/dashboard.js";
 
@@ -22,6 +23,7 @@ namespace SignalRDashboard.Web
             // 4) core dashboard.js
             return bundleFiles.Where(file => file.IncludedVirtualPath.StartsWith(modelsBaseDirectory))
                 .Union(bundleFiles.Where(file => file.IncludedVirtualPath.StartsWith(componentsBaseDirectory) && file.IncludedVirtualPath != appComponentJs))
+                .Union(bundleFiles.Where(file => file.IncludedVirtualPath.StartsWith(utilitiesBaseDirectory)))
                 .Union(bundleFiles.Where(file => file.IncludedVirtualPath == appComponentJs)
                 .Union(bundleFiles.Where(file => file.IncludedVirtualPath == dashboardCoreJs)));
         }

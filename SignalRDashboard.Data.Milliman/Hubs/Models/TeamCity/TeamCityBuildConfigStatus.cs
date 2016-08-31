@@ -2,13 +2,15 @@
 
 namespace SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity
 {
-    public class TeamCityBuildConfig : DashboardHubModel
+    public class TeamCityBuildConfigStatus : DashboardHubModel
     {
         private string _configId;
         private string _configName;
         private string _buildNumber;
         private bool _buildFailed;
         private string _buildTime;
+        private bool _buildRunning;
+        private decimal _percentageComplete;
 
         public string ConfigId
         {
@@ -34,10 +36,16 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.TeamCity
             set { SetProperty(ref _buildFailed, value); }
         }
 
-        public string BuildTime
+        public bool BuildRunning
         {
-            get { return _buildTime; }
-            set { SetProperty(ref _buildTime, value); }
+            get { return _buildRunning; }
+            set { SetProperty(ref _buildRunning, value); }
+        }
+
+        public decimal PercentageComplete
+        {
+            get { return _percentageComplete; }
+            set { SetProperty(ref _percentageComplete, value); }
         }
     }
 }

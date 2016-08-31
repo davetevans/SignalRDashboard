@@ -1,7 +1,7 @@
 ﻿using Microsoft.Rest;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
-namespace SignalRDashboard.Data.Milliman.DataSources
+namespace SignalRDashboard.Data.Milliman.Clients
 {
     public class AzureClient
     {

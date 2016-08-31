@@ -28,6 +28,10 @@ div.right-align-col-2 div.row > div:nth-child(2) {
     text-align: right;
 }
 
+div.right-align-col-3 div.row > div:nth-child(3) {
+    text-align: right;
+}
+
 div.signalrdashboard-component {
     font-size: 2.5em;
     padding-left: 2px;
@@ -144,6 +148,10 @@ div.row {
 
 div.success {
     background-color: #267F00;
+}
+
+div.in-progress {
+    background-color: #0059B3;
 }
 
 .right-align {
