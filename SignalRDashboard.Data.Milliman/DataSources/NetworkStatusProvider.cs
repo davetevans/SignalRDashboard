@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using FluentTc;
+using SignalRDashboard.Data.Milliman.Clients;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
 namespace SignalRDashboard.Data.Milliman.DataSources
@@ -14,6 +14,21 @@ namespace SignalRDashboard.Data.Milliman.DataSources
         private readonly bool _isInitialised = false;
         private readonly NetworkStatusData _networkData = new NetworkStatusData();
         private static readonly string[] Addresses = { "google.com", "twitter.com" };
+        private readonly TeamCityClient _client;
+
+        public NetworkStatusProvider()
+        {
+            var config = ConfigurationManager.AppSettings;
+
+            _client = new TeamCityClient
+            {
+                TeamCityUrl = config["TeamCityUrl"],
+                TeamCityUsername = config["TeamCityUsername"],
+                TeamCityPassword = config["TeamCityPassword"]
+            };
+
+            _client.Init();
+        }
 
         public NetworkStatusData GetNetworkStatus()
         {
@@ -80,19 +95,13 @@ namespace SignalRDashboard.Data.Milliman.DataSources
             return azureResult;
         }
 
-        private static bool CheckTeamCityConnection()
+        private bool CheckTeamCityConnection()
         {
             bool teamCityResult;
-            var config = ConfigurationManager.AppSettings;
-            var baseUrl = config["TeamCityUrl"];
-            var username = config["TeamCityUsername"];
-            var password = config["TeamCityPassword"];
-            
+
             try
             {
-                var teamCityClient = new RemoteTc().Connect(a => a.ToHost(baseUrl).UseSsl().AsUser(username, password));
-                var testGetUser = teamCityClient.GetUser(_ => _.Username(username));
-                teamCityResult = testGetUser != null;
+                teamCityResult = _client.TestConnection();
             }
             catch (Exception ex)
             {

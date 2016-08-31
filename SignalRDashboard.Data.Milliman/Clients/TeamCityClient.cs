@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Xml.XPath;
 using SignalRDashboard.Data.Milliman.Clients.TeamCity;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
@@ -45,6 +46,11 @@ namespace SignalRDashboard.Data.Milliman.Clients
                                         })
                                         .OrderBy(t => t.ConfigName).ToList()
                 }).ToList();
+        }
+
+        public bool TestConnection()
+        {
+            return Accessor.GetXml("users/username:build.monitor") != null;
         }
 
         private IEnumerable<Summary> GetAllProjectSummaries()
