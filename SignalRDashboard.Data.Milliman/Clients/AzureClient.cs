@@ -1,4 +1,11 @@
-﻿using Microsoft.Rest;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
+using SignalRDashboard.Data.Milliman.Clients.Azure;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
 namespace SignalRDashboard.Data.Milliman.Clients
@@ -11,60 +18,103 @@ namespace SignalRDashboard.Data.Milliman.Clients
         public string AzureTenantId { get; set; }
 
         private static string AuthToken { get; set; }
-        private static TokenCredentials TokenCredentials { get; set; }
+        private static HttpClient HttpClient { get; set; }
+        private static JavaScriptSerializer Serializer { get; set; }
 
+        private const string DefaultApiVersion = "2015-01-01";
+        private const string HdInsightApiVersion = "2015-03-01-preview";
+        
+
+        public AzureClient()
+        {
+            Serializer = new JavaScriptSerializer();
+        }
+        
         public void Authenticate()
         {
-            //AuthToken = GetAuthorizationToken();
-            //TokenCredentials = new TokenCredentials(AuthToken);
+            AuthToken = AuthenticationHelpers.AcquireTokenBySpn(AzureTenantId, AzureApplicationId, AzureServicePrincipalPassword);
+            HttpClient = new HttpClient();
+            HttpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AuthToken);
+            HttpClient.BaseAddress = new Uri("https://management.azure.com/");
         }
 
-        public AzureStatusData GetAzureMetrics()
+        public IEnumerable<AzureResourceGroupData> GetAzureMetrics(List<string> includedGroups)
         {
-            //var res = GetAzureResourceGroup();
+            var resGroups = GetAzureResourceGroups(DefaultApiVersion).Where(g => includedGroups.Contains(g.Name)).ToArray();
+            var clusters = resGroups.SelectMany(g => GetHdInsightClustersForResourceGroup(HdInsightApiVersion, g.Name)).ToArray();
 
-            //var restCredentials = Config.RmAccount.GetAzureServiceCredentials();
-            //var cloudCredentials = Config.StorageAccount.GetAzureCredentials(azureSubscriptionId);
-            //var res = new ResourceManagementClient(restCredentials) { SubscriptionId = azureSubscriptionId };
+            var test = resGroups.Select(g => new AzureResourceGroupData
+            {
+                Id = g.Id,
+                Name = g.Name,
+                Location = g.Location,
+                Stats = clusters.Where(c => c.id == g.Name)
+                    .Select(c => new AzureResourceGroupStatData
+                    {
+                        ClusterEtag = c.etag,
+                        ClusterName = $"{c.name} ({c.properties.osType} - {c.properties.clusterVersion})",
+                        ClusterSize = c.properties.computeProfile.roles.Select(r => $"{r.name} ({r.targetInstanceCount} x {r.hardwareProfile.vmSize})").FirstOrDefault(),
+                        ClusterState = c.properties.clusterState,
+                        ClusterDate = c.properties.createdDate
+                    })
+            }).ToList();
 
-            //var hdis = HdInsights(cloudCredentials);
-            //var allResources = res.Resources.List();
-            //var databases = new List<DatabaseResource>();
-
-            var data = new AzureStatusData {Id = "test", Name = "Test"};
-            return data;
+            return test;
         }
 
-        //private string GetAuthorizationToken()
-        //{
-        //    try
-        //    {
-        //        var cc = new ClientCredential(AzureApplicationId, AzureServicePrincipalPassword);
-        //        var context = new AuthenticationContext("https://login.windows.net/" + AzureTenantId);
-        //        var result = context.AcquireTokenAsync("https://management.azure.com/", cc);
-        //        if (result == null)
-        //        {
-        //            throw new InvalidOperationException("Failed to obtain the JWT token");
-        //        }
-        //        return result.Result.AccessToken;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var sdf = ex.Message;
-        //        return sdf;
-        //    }
-        //}
 
-        //private ResourceGroup GetAzureResourceGroup()
-        //{
-        //    var resourceManagementClient = new ResourceManagementClient(TokenCredentials)
-        //    {
-        //        SubscriptionId = AzureSubscriptionId
-        //    };
+        private IEnumerable<AzureResourceGroup> GetAzureResourceGroups(string apiVersion)
+        {
+            using (var response = HttpClient.GetAsync($"/subscriptions/{AzureSubscriptionId}/resourcegroups?api-version={apiVersion}").Result)
+            {
+                string responseContent;
+                var stream = response.Content.ReadAsStreamAsync().Result;
 
-        //    var resourceGroup = resourceManagementClient.ResourceGroups.Get("idm-develop");
+                using (var reader = new StreamReader(stream))
+                {
+                    responseContent = reader.ReadToEnd();
+                }
 
-        //    return resourceGroup;
-        //}
+                if (string.IsNullOrWhiteSpace(responseContent))
+                {
+                    return new List<AzureResourceGroup>();
+                }
+
+                var data = JObject.Parse(responseContent).SelectToken("value").ToString();
+
+                return Serializer.Deserialize<List<AzureResourceGroup>>(data);
+            }
+        }
+
+        private IEnumerable<HdInsightCluster> GetHdInsightClustersForResourceGroup(string apiVersion, string groupName)
+        {
+            using (var response = HttpClient.GetAsync($"/subscriptions/{AzureSubscriptionId}/resourceGroups/{groupName}/providers/Microsoft.HDInsight/clusters/?api-version={apiVersion}").Result)
+            {
+                string responseContent;
+                var stream = response.Content.ReadAsStreamAsync().Result;
+
+                using (var reader = new StreamReader(stream))
+                {
+                    responseContent = reader.ReadToEnd();
+                }
+
+                if (string.IsNullOrWhiteSpace(responseContent))
+                {
+                    return new List<HdInsightCluster>();
+                }
+
+                var data = JObject.Parse(responseContent).SelectToken("value").ToString();
+
+                var clusterData = Serializer.Deserialize<List<HdInsightCluster>>(data);
+
+                // set id to be the resource group name so we can identify them
+                foreach (var cd in clusterData)
+                {
+                    cd.id = groupName;
+                }
+
+                return clusterData;
+            }
+        }
     }
 }

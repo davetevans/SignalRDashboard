@@ -3,8 +3,10 @@
 
     function AzureStatus() {
         // Properties matching data model received via SignalR
-        this.id = '';
-        this.name = '';
+        this.groupId = '';
+        this.groupName = '';
+        this.location = '';
+        this.stats = [];
 
         // Error check conditions
         var model = this;

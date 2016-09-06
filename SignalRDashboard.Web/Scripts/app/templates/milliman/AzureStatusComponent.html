@@ -4,7 +4,25 @@
             Azure Metrics
         </div>
     </div>
-    <div class="box box-header">
-        {{model.name}}
+    <div *ngFor="#group of model" class="row right-align-col-2">
+        <div class="row box box-header">
+            {{group.groupName}} <span class="xsmall"> - {{group.location}}</span>
+        </div>
+        <div *ngFor="#stat of group.stats" class="row">
+            <div class="row">
+                <div class="col-lg-3">
+                    <span class="xsmall">{{stat.clusterName}}</span>
+                </div>
+                <div class="col-lg-3">
+                    <span class="xsmall">{{stat.clusterDate}}</span>
+                </div>
+                <div class="col-lg-3">
+                    <span class="xsmall">{{stat.clusterSize}}</span>
+                </div>
+                <div class="col-lg-3">
+                    <span class="xsmall">{{stat.clusterState}}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

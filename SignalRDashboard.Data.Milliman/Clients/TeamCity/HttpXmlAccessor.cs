@@ -10,8 +10,6 @@ namespace SignalRDashboard.Data.Milliman.Clients.TeamCity
 
     public class HttpXmlAccessor
     {
-        public static XNamespace Xhtml = XNamespace.Get("http://www.w3.org/1999/xhtml");
-
         private string BaseUrl { get; set; }
         private string UrlPrefix { get; set; }
         private string Username { get; set; }

@@ -23,14 +23,17 @@ namespace SignalRDashboard.Data.Milliman.Pollers
 
         protected override void RefreshData(AzureStatus model)
         {
-            var data = _provider.GetAzureStatus();
-            model.Id = data.Id;
-            model.Name = data.Name;
+            var latestData = _provider.GetAzureStatus();
+            foreach (var group in latestData)
+            {
+                model.UpdateOrAddGroup(group);
+            }
         }
 
         protected override void BroadcastData(AzureStatus model)
         {
-            Clients.All.updateAzureStatus(model);
+            var updatedGroups = model.GetGroups;
+            Clients.All.updateAzureStatus(updatedGroups);
         }
     }
 }

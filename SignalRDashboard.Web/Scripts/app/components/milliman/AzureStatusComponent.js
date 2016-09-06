@@ -1,4 +1,15 @@
 ﻿(function (signalrdashboardMilliman) {
+    function updateModelArray(currentModelArray, newModelArray) {
+        for (var i = 0; i < newModelArray.length; i++) {
+            var foundGroup = currentModelArray.find(function(group) { return group.groupId === newModelArray[i].groupId; });
+            if (!foundGroup) {
+                foundGroup = new signalrdashboardMilliman.AzureStatus();
+                currentModelArray.push(foundGroup);
+            } 
+            foundGroup.updateFromData(newModelArray[i]);    
+        }
+    };
+
     signalrdashboardMilliman.AzureStatusComponent =
       ng.core.Component({
           selector: 'azure-status',
@@ -6,7 +17,7 @@
       })
       .Class({
           constructor: function() {
-              this.model = new signalrdashboardMilliman.AzureStatus();
+              this.model = [];
               this.componentName = 'AzureStatus';
               signalrdashboard.dashboard.registerComponent(this);
           },
@@ -19,14 +30,14 @@
             
             // Add a client-side hub method that the server will call
             hub.client.updateAzureStatus = function(stats) {
-                model.updateFromData(stats);
+                updateModelArray(model, stats);
             };
           },
           initialiseData: function(connection) {
               var model = this.model;
              
               connection.azureStatus.server.getModel().done(function(stats) {
-                  model.updateFromData(stats);
+                  updateModelArray(model, stats);
               });                    
           }
           });
