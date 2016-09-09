@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -311,6 +312,7 @@
     <None Include="Properties\PublishProfiles\DTE local.pubxml" />
     <None Include="Properties\PublishProfiles\DTE.pubxml" />
     <None Include="Properties\PublishProfiles\FIleSystem.pubxml" />
+    <None Include="Properties\PublishProfiles\idm-ukofficedash - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\dashboard.js" />
     <Content Include="Scripts\app\components\core\ControlsComponent.js" />

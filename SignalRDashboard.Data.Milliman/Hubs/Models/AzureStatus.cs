@@ -23,12 +23,10 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     GroupId = webGroup.Id,
                     GroupName = webGroup.Name,
                     Location = webGroup.Location,
-                    Stats = webGroup.Stats.Select(s => new AzureResourceGroupStatStatus
+                    ClusterStats = webGroup.Stats.GroupBy(g => g.ClusterState).Select(s => new AzureClusterStatStatus
                     {
-                        ClusterName = s.ClusterName,
-                        ClusterSize = s.ClusterSize,
-                        ClusterState = s.ClusterState,
-                        ClusterDate = s.ClusterDate
+                        ClusterState = s.Key,
+                        ClusterCount = s.Count()
                     }).ToList()
                 };
                 _groups.Add(dashGroup);
@@ -40,7 +38,11 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 dashGroup.GroupName = webGroup.Name;
                 dashGroup.Location = webGroup.Location;
 
-                foreach (var webStat in webGroup.Stats)
+                foreach (var webStat in webGroup.Stats.GroupBy(g => g.ClusterState).Select(s => new AzureClusterStatStatus
+                {
+                    ClusterState = s.Key,
+                    ClusterCount = s.Count()
+                }))
                 {
                     UpdateOrAddGroupStat(dashGroup, webStat);
                 }
@@ -48,28 +50,18 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
 
             HasChanged = HasChanged || dashGroup.HasChanged;
         }
-        private void UpdateOrAddGroupStat(AzureGroupStatus dashGroup, AzureResourceGroupStatData webStat)
+        private void UpdateOrAddGroupStat(AzureGroupStatus dashGroup, AzureClusterStatStatus webStat)
         {
-            var dashStat = dashGroup.Stats.FirstOrDefault(s => s.ClusterEtag == webStat.ClusterEtag);
+            var dashStat = dashGroup.ClusterStats.FirstOrDefault(s => s.ClusterState == webStat.ClusterState);
+
             if (dashStat == null)
             {
-                dashGroup.Stats.Add(new AzureResourceGroupStatStatus
-                {
-                    ClusterEtag = webStat.ClusterEtag,
-                    ClusterName = webStat.ClusterName,
-                    ClusterSize = webStat.ClusterSize,
-                    ClusterState = webStat.ClusterState,
-                    ClusterDate = webStat.ClusterDate
-                });
+                dashGroup.ClusterStats.Add(webStat);
                 HasChanged = true;
             }
             else
             {
-                dashStat.ClusterEtag = webStat.ClusterEtag;
-                dashStat.ClusterName = webStat.ClusterName;
-                dashStat.ClusterSize = webStat.ClusterSize;
-                dashStat.ClusterState = webStat.ClusterState;
-                dashStat.ClusterDate = webStat.ClusterDate;
+                dashStat.ClusterCount = webStat.ClusterCount;
                 HasChanged = dashStat.HasChanged;
             }
         }

@@ -8,19 +8,13 @@
         <div class="row box box-header">
             {{group.groupName}} <span class="xsmall"> - {{group.location}}</span>
         </div>
-        <div *ngFor="#stat of group.stats" class="row">
+        <div *ngFor="#clusterStat of group.clusterStats" class="row">
             <div class="row">
-                <div class="col-lg-3">
-                    <span class="xsmall">{{stat.clusterName}}</span>
+                <div class="col-lg-5">
+                    <span>Clusters ({{clusterStat.clusterState}})</span>
                 </div>
-                <div class="col-lg-3">
-                    <span class="xsmall">{{stat.clusterDate}}</span>
-                </div>
-                <div class="col-lg-3">
-                    <span class="xsmall">{{stat.clusterSize}}</span>
-                </div>
-                <div class="col-lg-3">
-                    <span class="xsmall">{{stat.clusterState}}</span>
+                <div class="col-lg-5">
+                    <span>{{clusterStat.clusterCount}}</span>
                 </div>
             </div>
         </div>

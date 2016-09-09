@@ -6,7 +6,7 @@
         this.groupId = '';
         this.groupName = '';
         this.location = '';
-        this.stats = [];
+        this.clusterStats = [];
 
         // Error check conditions
         var model = this;

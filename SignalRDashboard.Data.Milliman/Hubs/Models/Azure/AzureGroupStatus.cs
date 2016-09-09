@@ -8,7 +8,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
         private string _groupId;
         private string _groupName;
         private string _location;
-        private IList<AzureResourceGroupStatStatus> _stats;
+        private IList<AzureClusterStatStatus> _stats;
 
         public string GroupId
         {
@@ -28,7 +28,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
             set { SetProperty(ref _location, value); }
         }
 
-        public IList<AzureResourceGroupStatStatus> Stats
+        public IList<AzureClusterStatStatus> ClusterStats
         {
             get { return _stats; }
             set { SetProperty(ref _stats, value); }

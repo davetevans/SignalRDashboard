@@ -168,7 +168,7 @@
     <Compile Include="DataSources\TwitterStatusProvider.cs" />
     <Compile Include="Clients\TwitterClient.cs" />
     <Compile Include="Hubs\Models\Azure\AzureGroupStatus.cs" />
-    <Compile Include="Hubs\Models\Azure\AzureResourceGroupStatStatus.cs" />
+    <Compile Include="Hubs\Models\Azure\AzureClusterStatStatus.cs" />
     <Compile Include="Hubs\Models\TeamCity\TeamCityBuildConfigStatus.cs" />
     <Compile Include="Hubs\Models\TeamCity\TeamCityProjectStatus.cs" />
     <Compile Include="Hubs\Models\TeamCityStatus.cs" />
