@@ -1,0 +1,22 @@
+﻿using SignalRDashboard.Data.Core.Hubs.Models;
+
+namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
+{
+    public class AzureStatStatus : DashboardHubModel
+    {
+        private string _groupName;
+        private int _count;
+        
+        public string GroupName
+        {
+            get { return _groupName; }
+            set { SetProperty(ref _groupName, value); }
+        }
+
+        public int Count
+        {
+            get { return _count; }
+            set { SetProperty(ref _count, value); }
+        }
+    }
+}

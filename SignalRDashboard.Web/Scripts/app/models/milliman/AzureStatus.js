@@ -7,6 +7,7 @@
         this.groupName = '';
         this.location = '';
         this.clusterStats = [];
+        this.sqlStats = [];
 
         // Error check conditions
         var model = this;

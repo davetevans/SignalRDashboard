@@ -7,6 +7,7 @@ namespace SignalRDashboard.Data.Milliman.DataSources.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public IEnumerable<AzureResourceGroupStatData> Stats { get; set; } 
+        public IEnumerable<AzureStatData> ClusterStats { get; set; }
+        public IEnumerable<AzureStatData> SqlStats { get; set; }
     }
 }

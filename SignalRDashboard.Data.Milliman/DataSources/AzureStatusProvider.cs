@@ -42,9 +42,9 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
                 try
                 {
-                    foreach (var project in _client.GetAzureMetrics(_includedResourceGroups).ToList())
+                    foreach (var group in _client.GetAzureMetrics(_includedResourceGroups).ToList())
                     {
-                        _azureData.Add(project);
+                        _azureData.Add(group);
                     }
 
                 }

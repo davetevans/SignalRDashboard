@@ -10,11 +10,21 @@
         </div>
         <div *ngFor="#clusterStat of group.clusterStats" class="row">
             <div class="row">
-                <div class="col-lg-5">
-                    <span>Clusters ({{clusterStat.clusterState}})</span>
+                <div class="col-lg-8">
+                    <span>Clusters ({{clusterStat.groupName}})</span>
                 </div>
-                <div class="col-lg-5">
-                    <span>{{clusterStat.clusterCount}}</span>
+                <div class="col-lg-2">
+                    <span>{{clusterStat.count}}</span>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="#sqlStat of group.sqlStats" class="row">
+            <div class="row">
+                <div class="col-lg-8">
+                    <span>Databases ({{sqlStat.groupName}})</span>
+                </div>
+                <div class="col-lg-2">
+                    <span>{{sqlStat.count}}</span>
                 </div>
             </div>
         </div>

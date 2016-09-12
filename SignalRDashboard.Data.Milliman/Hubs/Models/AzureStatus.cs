@@ -23,10 +23,15 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     GroupId = webGroup.Id,
                     GroupName = webGroup.Name,
                     Location = webGroup.Location,
-                    ClusterStats = webGroup.Stats.GroupBy(g => g.ClusterState).Select(s => new AzureClusterStatStatus
+                    ClusterStats = webGroup.ClusterStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
                     {
-                        ClusterState = s.Key,
-                        ClusterCount = s.Count()
+                        GroupName = s.Key,
+                        Count = s.Count()
+                    }).ToList(),
+                    SqlStats = webGroup.SqlStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
+                    {
+                        GroupName = s.Key,
+                        Count = s.Count()
                     }).ToList()
                 };
                 _groups.Add(dashGroup);
@@ -38,21 +43,31 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 dashGroup.GroupName = webGroup.Name;
                 dashGroup.Location = webGroup.Location;
 
-                foreach (var webStat in webGroup.Stats.GroupBy(g => g.ClusterState).Select(s => new AzureClusterStatStatus
+                foreach (var webStat in webGroup.ClusterStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
                 {
-                    ClusterState = s.Key,
-                    ClusterCount = s.Count()
+                    GroupName = s.Key,
+                    Count = s.Count()
                 }))
                 {
-                    UpdateOrAddGroupStat(dashGroup, webStat);
+                    UpdateOrAddClusterStat(dashGroup, webStat);
+                }
+
+                foreach (var webStat in webGroup.SqlStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
+                {
+                    GroupName = s.Key,
+                    Count = s.Count()
+                }))
+                {
+                    UpdateOrAddSqlStat(dashGroup, webStat);
                 }
             }
 
             HasChanged = HasChanged || dashGroup.HasChanged;
         }
-        private void UpdateOrAddGroupStat(AzureGroupStatus dashGroup, AzureClusterStatStatus webStat)
+
+        private void UpdateOrAddClusterStat(AzureGroupStatus dashGroup, AzureStatStatus webStat)
         {
-            var dashStat = dashGroup.ClusterStats.FirstOrDefault(s => s.ClusterState == webStat.ClusterState);
+            var dashStat = dashGroup.ClusterStats.FirstOrDefault(s => s.GroupName == webStat.GroupName);
 
             if (dashStat == null)
             {
@@ -61,7 +76,23 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
             }
             else
             {
-                dashStat.ClusterCount = webStat.ClusterCount;
+                dashStat.Count = webStat.Count;
+                HasChanged = dashStat.HasChanged;
+            }
+        }
+
+        private void UpdateOrAddSqlStat(AzureGroupStatus dashGroup, AzureStatStatus webStat)
+        {
+            var dashStat = dashGroup.SqlStats.FirstOrDefault(s => s.GroupName == webStat.GroupName);
+
+            if (dashStat == null)
+            {
+                dashGroup.SqlStats.Add(webStat);
+                HasChanged = true;
+            }
+            else
+            {
+                dashStat.Count = webStat.Count;
                 HasChanged = dashStat.HasChanged;
             }
         }

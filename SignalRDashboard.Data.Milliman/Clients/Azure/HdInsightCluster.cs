@@ -12,6 +12,9 @@ namespace SignalRDashboard.Data.Milliman.Clients.Azure
         public string etag { get; set; }
         public object tags { get; set; }
 
+        [JsonIgnore]
+        public string resourceGroupName { get; set; }
+
         [JsonProperty("properties")]
         public ClusterProperties properties { get; set; }
     }
