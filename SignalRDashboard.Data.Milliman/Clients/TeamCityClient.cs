@@ -33,7 +33,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
                 p => new TeamCityProjectData
                 {
                     ProjectId = p.Id,
-                    ProjectName = p.Name,
+                    ProjectName = $"{(p.Name == "Cloud Service" ? "Compute" : "IDM")} {p.Name}",
                     BuildConfigs = types.Where(t => t.BuildProjectId == p.Id)
                                         .Select(t => new TeamCityBuildConfigData
                                         {

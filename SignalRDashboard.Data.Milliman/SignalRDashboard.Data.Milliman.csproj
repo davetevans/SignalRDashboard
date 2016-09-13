@@ -144,6 +144,7 @@
   <ItemGroup>
     <Compile Include="Clients\Azure\AuthenticationHelpers.cs" />
     <Compile Include="Clients\Azure\SqlDatabase.cs" />
+    <Compile Include="Clients\Azure\AzureError.cs" />
     <Compile Include="Clients\Azure\SqlServer.cs" />
     <Compile Include="Clients\Azure\HdInsightCluster.cs" />
     <Compile Include="Clients\Azure\AzureResourceGroup.cs" />

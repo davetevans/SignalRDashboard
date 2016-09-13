@@ -1,4 +1,5 @@
-﻿using SignalRDashboard.Data.Core.Hubs.Models;
+﻿using System;
+using SignalRDashboard.Data.Core.Hubs.Models;
 
 namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
 {
@@ -6,7 +7,8 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
     {
         private string _groupName;
         private int _count;
-        
+        private string _aliveTime;
+
         public string GroupName
         {
             get { return _groupName; }
@@ -17,6 +19,12 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
         {
             get { return _count; }
             set { SetProperty(ref _count, value); }
+        }
+
+        public string AliveTime
+        {
+            get { return _aliveTime; }
+            set { SetProperty(ref _aliveTime, value); }
         }
     }
 }

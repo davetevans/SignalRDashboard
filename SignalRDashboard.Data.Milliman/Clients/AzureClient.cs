@@ -41,7 +41,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
 
         public IEnumerable<AzureResourceGroupData> GetAzureMetrics(List<string> includedGroups)
         {
-            var resGroups = GetResourceGroups().Where(g => includedGroups.Contains(g.Name)).ToArray();
+            var resGroups = GetResourceGroups().ToArray(); //.Where(g => includedGroups.Contains(g.Name)).ToArray();
             var clusters = resGroups.SelectMany(g => GetClusters(g.Name)).ToArray();
             var databases = resGroups.SelectMany(g => GetDatabases(g.Name)).ToArray();
 
@@ -112,7 +112,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
             return databases;
         }
 
-        private static T GetAzureResponse<T>(string request)
+        private T GetAzureResponse<T>(string request)
         {
             using (var response = HttpClient.GetAsync(request).Result)
             {
@@ -129,9 +129,24 @@ namespace SignalRDashboard.Data.Milliman.Clients
                     return (T)Activator.CreateInstance(typeof(T));
                 }
 
-                var data = JObject.Parse(responseContent).SelectToken("value").ToString();
+                var json = JObject.Parse(responseContent).SelectToken("value");
+                var errorJson = JObject.Parse(responseContent).SelectToken("error");
 
-                return Serializer.Deserialize<T>(data);
+                if (json != null)
+                {
+                    return Serializer.Deserialize<T>(json.ToString());
+                }
+
+                if (errorJson != null)
+                {
+                    var error = Serializer.Deserialize<AzureError>(errorJson.ToString());
+                    if (error.code == "ExpiredAuthenticationToken")
+                    {
+                        Authenticate();
+                    }
+                }
+
+                return (T)Activator.CreateInstance(typeof(T));
             }
         }
     }

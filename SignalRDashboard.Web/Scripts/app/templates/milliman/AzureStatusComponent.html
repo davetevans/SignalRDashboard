@@ -4,14 +4,17 @@
             Azure Metrics
         </div>
     </div>
-    <div *ngFor="#group of model" class="row right-align-col-2">
-        <div class="row box box-header">
+    <div *ngFor="#group of model" class="row right-align-col-2 right-align-col-3">
+        <div class="row component-sub-title">
             {{group.groupName}} <span class="xsmall"> - {{group.location}}</span>
         </div>
         <div *ngFor="#clusterStat of group.clusterStats" class="row">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <span>Clusters ({{clusterStat.groupName}})</span>
+                </div>
+                <div class="col-lg-2">
+                    <span>{{clusterStat.aliveTime}}</span>
                 </div>
                 <div class="col-lg-2">
                     <span>{{clusterStat.count}}</span>
@@ -20,8 +23,11 @@
         </div>
         <div *ngFor="#sqlStat of group.sqlStats" class="row">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <span>Databases ({{sqlStat.groupName}})</span>
+                </div>
+                <div class="col-lg-2">
+                    <span>{{sqlStat.aliveTime}}</span>
                 </div>
                 <div class="col-lg-2">
                     <span>{{sqlStat.count}}</span>

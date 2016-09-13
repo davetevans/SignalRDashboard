@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using SignalRDashboard.Data.Core.Hubs.Models;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
@@ -23,16 +25,24 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     GroupId = webGroup.Id,
                     GroupName = webGroup.Name,
                     Location = webGroup.Location,
-                    ClusterStats = webGroup.ClusterStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
-                    {
-                        GroupName = s.Key,
-                        Count = s.Count()
-                    }).ToList(),
-                    SqlStats = webGroup.SqlStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
-                    {
-                        GroupName = s.Key,
-                        Count = s.Count()
-                    }).ToList()
+                    ClusterStats = webGroup.ClusterStats
+                        .Select(x => new {x.Size, TimeAlive = CalcTimeAlive(x.Date)})
+                        .GroupBy(g => g.Size)
+                        .Select(s => new AzureStatStatus
+                        {
+                            GroupName = s.Key,
+                            Count = s.Count(),
+                            AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
+                        }).ToList(),
+                    SqlStats = webGroup.SqlStats
+                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date) })
+                        .GroupBy(g => g.Size)
+                        .Select(s => new AzureStatStatus
+                        {
+                            GroupName = s.Key,
+                            Count = s.Count(),
+                            AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
+                        }).ToList()
                 };
                 _groups.Add(dashGroup);
                 HasChanged = true;
@@ -43,20 +53,28 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 dashGroup.GroupName = webGroup.Name;
                 dashGroup.Location = webGroup.Location;
 
-                foreach (var webStat in webGroup.ClusterStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
-                {
-                    GroupName = s.Key,
-                    Count = s.Count()
-                }))
+                foreach (var webStat in webGroup.ClusterStats
+                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date) })
+                        .GroupBy(g => g.Size)
+                        .Select(s => new AzureStatStatus
+                        {
+                            GroupName = s.Key,
+                            Count = s.Count(),
+                            AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
+                        }))
                 {
                     UpdateOrAddClusterStat(dashGroup, webStat);
                 }
 
-                foreach (var webStat in webGroup.SqlStats.GroupBy(g => g.Size).Select(s => new AzureStatStatus
-                {
-                    GroupName = s.Key,
-                    Count = s.Count()
-                }))
+                foreach (var webStat in webGroup.SqlStats
+                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date) })
+                        .GroupBy(g => g.Size)
+                        .Select(s => new AzureStatStatus
+                        {
+                            GroupName = s.Key,
+                            Count = s.Count(),
+                            AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
+                        }))
                 {
                     UpdateOrAddSqlStat(dashGroup, webStat);
                 }
@@ -77,6 +95,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
             else
             {
                 dashStat.Count = webStat.Count;
+                dashStat.AliveTime = webStat.AliveTime;
                 HasChanged = dashStat.HasChanged;
             }
         }
@@ -93,8 +112,14 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
             else
             {
                 dashStat.Count = webStat.Count;
+                dashStat.AliveTime = webStat.AliveTime;
                 HasChanged = dashStat.HasChanged;
             }
+        }
+
+        private static TimeSpan CalcTimeAlive(string createdDate)
+        {
+            return DateTime.Now - DateTime.Parse(createdDate, CultureInfo.InvariantCulture);
         }
 
         public override void ResetChangedState()

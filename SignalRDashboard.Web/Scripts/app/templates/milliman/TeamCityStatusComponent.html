@@ -5,7 +5,7 @@
         </div>
     </div>
     <div *ngFor="#project of model" class="row right-align-col-3">
-        <div class="row box box-header">
+        <div class="row component-sub-title">
             {{project.projectName}}
         </div>
         <div *ngFor="#config of project.buildConfigs" class="row" [class.error]="config.buildFailed && !config.buildRunning" [class.in-progress]="config.buildRunning">

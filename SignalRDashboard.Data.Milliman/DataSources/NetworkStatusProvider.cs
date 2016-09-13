@@ -52,7 +52,7 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
                 Task.WaitAll(pingTasks.ToArray());
 
-                var pingResults = pingTasks.Select(pingTask => pingTask.Result.Status == IPStatus.Success).ToList();
+                var pingResults = pingTasks.Select(pingTask => pingTask.Result?.Status == IPStatus.Success).ToList();
 
                 internetResult = pingResults.TrueForAll(p => true);
 
