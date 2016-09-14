@@ -37,6 +37,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -263,7 +264,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Custom.css" />
-    <Content Include="Content\Demo.css" />
     <Content Include="Content\images\azure_off.png" />
     <Content Include="Content\images\azure_on.png" />
     <Content Include="Content\images\internet_off.png" />
@@ -271,6 +271,20 @@
     <Content Include="Content\images\teamcity_off.png" />
     <Content Include="Content\images\teamcity_on.png" />
     <Content Include="Content\images\van.png" />
+    <Content Include="Content\Sounds\Generic\Error\AirHorn.mp3" />
+    <Content Include="Content\Sounds\Generic\Error\multi-doh.mp3" />
+    <Content Include="Content\Sounds\Generic\Success\applause.mp3" />
+    <Content Include="Content\Sounds\Generic\Success\drumroll.mp3" />
+    <Content Include="Content\Sounds\Generic\Success\TaDa.mp3" />
+    <Content Include="Content\Sounds\NetworkStatus\Error\doh.mp3" />
+    <Content Include="Content\Sounds\NetworkStatus\Success\woohoo.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\AirHorn.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\Coffee.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\Curry.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\Fire.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\French.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\Ice.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\Trombone.mp3" />
     <Content Include="Scripts\angular2-beta0\es6-shim.min.js" />
     <Content Include="Scripts\app\components\AppComponent.js" />
     <Content Include="Scripts\app\components\core\ConnectedUsersComponent.js" />
@@ -278,11 +292,7 @@
     <Content Include="Scripts\app\components\milliman\AzureStatusComponent.js" />
     <Content Include="Scripts\app\components\milliman\NetworkStatusComponent.js" />
     <Content Include="Scripts\app\components\milliman\TwitterStatusComponent.js" />
-    <Content Include="Scripts\app\components\demo\BuildMetricsComponent.js" />
-    <Content Include="Scripts\app\components\demo\SiteStatisticsComponent.js" />
     <Content Include="Scripts\app\models\milliman\TeamCityStatus.js" />
-    <Content Include="Scripts\app\models\demo\BuildMetrics.js" />
-    <Content Include="Scripts\app\models\demo\SiteStatistics.js" />
     <Content Include="Scripts\app\models\milliman\AzureStatus.js" />
     <Content Include="Scripts\app\models\milliman\NetworkStatus.js" />
     <Content Include="Scripts\app\models\milliman\TwitterStatus.js" />
@@ -291,9 +301,7 @@
     <Content Include="Scripts\app\templates\milliman\NetworkStatusComponent.html" />
     <Content Include="Scripts\app\templates\milliman\TwitterStatusComponent.html" />
     <Content Include="Scripts\app\templates\core\ControlsComponent.html" />
-    <Content Include="Scripts\app\components\demo\SiteStatusComponent.js" />
     <Content Include="Scripts\app\models\core\ConnectedUsers.js" />
-    <Content Include="Scripts\app\models\demo\SiteStatus.js" />
     <Content Include="Scripts\app\templates\core\ConnectedUsersComponent.html" />
     <Content Include="Scripts\app\templates\core\DashboardComponent.html" />
     <Content Include="Content\bootstrap.css" />
@@ -316,9 +324,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\app\dashboard.js" />
     <Content Include="Scripts\app\components\core\ControlsComponent.js" />
-    <Content Include="Scripts\app\templates\demo\BuildMetricsComponent.html" />
-    <Content Include="Scripts\app\templates\demo\SiteStatisticsComponent.html" />
-    <Content Include="Scripts\app\templates\demo\SiteStatusComponent.html" />
     <Content Include="Scripts\app\utilities\milliman\angular-extensions.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -357,13 +362,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Sounds\DemoBuildMetrics\Error\" />
-    <Folder Include="Content\Sounds\DemoBuildMetrics\Success\" />
-    <Folder Include="Content\Sounds\Generic\Error\" />
-    <Folder Include="Content\Sounds\Generic\Success\" />
-    <Folder Include="Content\Sounds\NetworkStatus\Error\" />
-    <Folder Include="Content\Sounds\NetworkStatus\Success\" />
-    <Folder Include="Content\Sounds\TwitterStatus\Error\" />
     <Folder Include="Content\Sounds\TwitterStatus\Success\" />
     <Folder Include="Views\Media\" />
   </ItemGroup>
@@ -382,10 +380,6 @@
     <ProjectReference Include="..\SignalRDashboard.Data.Core\SignalRDashboard.Data.Core.csproj">
       <Project>{655116df-c1d3-4ef7-bc92-f9d9b2075f17}</Project>
       <Name>SignalRDashboard.Data.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SignalRDashboard.Data.Demo\SignalRDashboard.Data.Demo.csproj">
-      <Project>{cbcaeb01-5574-45d8-9bb3-06ff3adb43b0}</Project>
-      <Name>SignalRDashboard.Data.Demo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SignalRDashboard.Data.Milliman\SignalRDashboard.Data.Milliman.csproj">
       <Project>{2dced668-4980-433d-b304-adff39f79786}</Project>
