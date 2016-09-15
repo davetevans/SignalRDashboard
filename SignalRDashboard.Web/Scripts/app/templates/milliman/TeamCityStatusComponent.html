@@ -9,27 +9,28 @@
             {{project.projectName}}
         </div>
         <div *ngFor="#config of project.buildConfigs" class="row" [class.error]="config.buildFailed && !config.buildRunning" [class.in-progress]="config.buildRunning">
-            <div class="col-lg-4">
-                {{config.configName}}
-            </div>
-            <div class="col-lg-4">
-                <span class="xsmall" [hidden]="!config.buildRunning">{{config.percentageComplete}}%</span>
-            </div>
-            <div class="col-lg-4">
-                <span class="xsmall">{{config.buildNumber}}</span>
-            </div>
-            <!--
-            <div class="col-lg-4">
-                <div class="progress" [hidden]="!config.buildRunning">
-                    <div class="progress-bar" role="progressbar"
-                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" 
-                         style="width:{{config.percentageComplete}}%">
-                        {{config.percentageComplete}}%
+            <div class="component-row row">
+                <div class="col-lg-4">
+                    {{config.configName}}
+                </div>
+                <div class="col-lg-4">
+                    <span class="xsmall" [hidden]="!config.buildRunning">{{config.percentageComplete}}%</span>
+                </div>
+                <div class="col-lg-4">
+                    <span class="xsmall">{{config.buildNumber}}</span>
+                </div>
+                <!--
+                <div class="col-lg-4">
+                    <div class="progress" [hidden]="!config.buildRunning">
+                        <div class="progress-bar" role="progressbar"
+                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                             style="width:{{config.percentageComplete}}%">
+                            {{config.percentageComplete}}%
+                        </div>
                     </div>
                 </div>
+                -->
             </div>
-            -->
         </div>
-
     </div>
 </div>

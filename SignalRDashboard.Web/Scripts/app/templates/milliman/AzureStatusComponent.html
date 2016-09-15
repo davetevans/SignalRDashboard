@@ -9,28 +9,28 @@
             {{group.groupName}} <span class="xsmall"> - {{group.location}}</span>
         </div>
         <div *ngFor="#clusterStat of group.clusterStats" class="row">
-            <div class="row">
-                <div class="col-lg-7">
+            <div class="component-row row">
+                <div class="col-lg-6">
                     <span>Clusters: {{clusterStat.groupName}}</span>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <span>{{clusterStat.count}}</span>
                 </div>
-                <div class="col-lg-2">
-                    <span>{{clusterStat.aliveTime}}</span>
+                <div class="col-lg-3">
+                    <span class="small">{{clusterStat.aliveTime}}</span>
                 </div>
             </div>
         </div>
         <div *ngFor="#sqlStat of group.sqlStats" class="row">
-            <div class="row">
-                <div class="col-lg-7">
+            <div class="component-row row">
+                <div class="col-lg-6">
                     <span>Databases: {{sqlStat.groupName}}</span>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <span>{{sqlStat.count}}</span>
                 </div>
-                <div class="col-lg-2">
-                    <span>{{sqlStat.aliveTime}}</span>
+                <div class="col-lg-3">
+                    <span class="small">{{sqlStat.aliveTime}}</span>
                 </div>
             </div>
         </div>

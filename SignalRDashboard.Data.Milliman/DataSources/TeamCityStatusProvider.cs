@@ -11,6 +11,7 @@ namespace SignalRDashboard.Data.Milliman.DataSources
         private readonly bool _isInitialised = false;
         private readonly IList<TeamCityProjectData> _teamCityData = new List<TeamCityProjectData>();
         private readonly List<string> _includedProjects = new List<string>();
+        private readonly List<string> _excludedBuildConfigs = new List<string>();
         private readonly TeamCityClient _client;
 
         public TeamCityStatusProvider()
@@ -30,6 +31,11 @@ namespace SignalRDashboard.Data.Milliman.DataSources
             {
                 _includedProjects.Add(p);
             }
+
+            foreach (var c in config["TeamCityIgnoredBuildConfigs"].Split(','))
+            {
+                _excludedBuildConfigs.Add(c);
+            }
         }
         
         public IEnumerable<TeamCityProjectData> GetTeamCityStatus()
@@ -40,7 +46,7 @@ namespace SignalRDashboard.Data.Milliman.DataSources
 
                 try
                 {
-                    foreach (var project in _client.GetIncludedProjects(_includedProjects))
+                    foreach (var project in _client.GetIncludedProjects(_includedProjects, _excludedBuildConfigs))
                     {
                         _teamCityData.Add(project);
                     }

@@ -21,6 +21,8 @@ namespace SignalRDashboard.Data.Milliman.Clients.TeamCity
             UrlPrefix = urlPrefix;
             Username = username;
             Password = password;
+
+            ServicePointManager.ServerCertificateValidationCallback = (s, certificate, chain, sslPolicyErrors) => true;
         }
 
         public XElement GetXml(string path)

@@ -46,10 +46,15 @@ div.signalrdashboard-component .component-title {
 }
 
 div.signalrdashboard-component .component-sub-title {
-    font-size: 1.0em;
+    font-size: 1.2em;
     font-weight: bold;
     padding: 3px;
     background-color: #474A55;
+}
+
+div.signalrdashboard-component .component-row {
+    margin: 1px 0;
+    font-size: 1.3em;
 }
 
 div.signalrdashboard-component span.small {

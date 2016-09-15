@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Xml.XPath;
 using SignalRDashboard.Data.Milliman.Clients.TeamCity;
 using SignalRDashboard.Data.Milliman.DataSources.Models;
 
@@ -20,13 +19,13 @@ namespace SignalRDashboard.Data.Milliman.Clients
             Accessor = new HttpXmlAccessor("https://" + TeamCityUrl, "/httpAuth/app/rest/", TeamCityUsername, TeamCityPassword);
         }
 
-        public IEnumerable<TeamCityProjectData> GetIncludedProjects(List<string> includedProjects)
+        public IEnumerable<TeamCityProjectData> GetIncludedProjects(List<string> includedProjects, List<string> excludedBuildConfigs)
         {
             if (!includedProjects.Any()) return null;
 
             var projectSummaries = GetAllProjectSummaries().Where(p => includedProjects.Contains(p.Id)).ToArray();
             var projects = projectSummaries.Select(p => GetProject(p.Id)).OrderBy(o => o.Description).ToArray();
-            var types = projects.SelectMany(p => p.BuildTypes).Select(t => GetBuildType(t.Id)).OrderByDescending(o => o.Id).ToArray();
+            var types = projects.SelectMany(p => p.BuildTypes).Select(t => GetBuildType(t.Id)).OrderByDescending(o => o.Id).Where(b => !excludedBuildConfigs.Contains(b.Id)).ToArray();
             var latestBuilds = types.Select(t => GetLatestBuild(t.Id)).ToArray();
 
             return projects.Select(

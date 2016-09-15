@@ -34,14 +34,14 @@ namespace SignalRDashboard.Web.Utilities
             lock (_lockObject)
             {
                 DirectoryFileCache cache = _fileCaches.GetOrAdd(subfolder, sf => new DirectoryFileCache(fullFolderPath));
-                if (cache.ContainsFiles) {
-                    if (!string.IsNullOrEmpty(keyword))
-                    {
-                        return cache.Files.FirstOrDefault(f => f.Contains(keyword));
-                    }
-
+                if (cache.ContainsFiles)
+                {
                     var random = new Random();
-                    return cache.Files.Skip(random.Next(0, cache.Files.Count() - 1)).FirstOrDefault();
+                    return !string.IsNullOrEmpty(keyword)
+                        ? cache.Files.Where(f => f.Contains(keyword))
+                            .Skip(random.Next(0, cache.Files.Count() - 1))
+                            .FirstOrDefault()
+                        : cache.Files.Skip(random.Next(0, cache.Files.Count() - 1)).FirstOrDefault();
                 }
             }
 

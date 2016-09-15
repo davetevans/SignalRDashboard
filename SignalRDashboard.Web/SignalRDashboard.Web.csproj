@@ -280,6 +280,7 @@
     <Content Include="Content\Sounds\NetworkStatus\Success\woohoo.mp3" />
     <Content Include="Content\Sounds\TwitterStatus\Error\AirHorn.mp3" />
     <Content Include="Content\Sounds\TwitterStatus\Error\Coffee.mp3" />
+    <Content Include="Content\Sounds\TwitterStatus\Error\Coffee2.mp3" />
     <Content Include="Content\Sounds\TwitterStatus\Error\Curry.mp3" />
     <Content Include="Content\Sounds\TwitterStatus\Error\Fire.mp3" />
     <Content Include="Content\Sounds\TwitterStatus\Error\French.mp3" />
