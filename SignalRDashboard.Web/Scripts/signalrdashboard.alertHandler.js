@@ -15,7 +15,9 @@
                             signalrdashboard.soundPlayer.playError(component);
                         }
                     } else {
-                        signalrdashboard.soundPlayer.playSuccess(component);
+                        if (component !== 'TwitterStatus') {
+                            signalrdashboard.soundPlayer.playSuccess(component);
+                        }
                     }
                 }
             }

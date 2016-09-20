@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using SignalRDashboard.Web.Utilities;
 
 namespace SignalRDashboard.Web.Controllers
@@ -38,16 +37,15 @@ namespace SignalRDashboard.Web.Controllers
             var keyword = KeywordSelector(customText);
             var file = _soundFilePicker.GetRandomSoundFile(component, category, keyword);
             var relative = _filePathConverter.ToFullWebUrl(file);
-            return Json(Url.Content(relative),
-                JsonRequestBehavior.AllowGet);           
+            return Json(Url.Content(relative), JsonRequestBehavior.AllowGet);           
         }
 
-        private string KeywordSelector(string customText)
+        private static string KeywordSelector(string customText)
         {
             if (customText == null)
-            {
                 return null;
-            }
+
+            customText = customText.ToLower();
 
             if (customText.Contains("coffee") || customText.Contains("cafe"))
             {

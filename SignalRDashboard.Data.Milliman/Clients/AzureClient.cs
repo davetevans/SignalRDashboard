@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
@@ -54,7 +53,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
                     .Select(c => new AzureStatData
                     {
                         Name = $"{c.name} ({c.properties.osType} - {c.properties.clusterVersion})",
-                        Size = string.Join(" | ", c.properties.computeProfile.roles.Where(r => r.name != "zookeepernode").Select(r => $"{r.targetInstanceCount} x {r.hardwareProfile.vmSize}")),
+                        Size = string.Join(" | ", c.properties.computeProfile.roles.Where(r => r.name != "zookeepernode").Select(r => $"{r.targetInstanceCount}x{r.hardwareProfile.vmSize}")),
                         State = c.properties.clusterState,
                         Date = c.properties.createdDate
                     }),
@@ -86,6 +85,10 @@ namespace SignalRDashboard.Data.Milliman.Clients
             foreach (var cd in clusterData)
             {
                 cd.resourceGroupName = groupName;
+                foreach (var role in cd.properties.computeProfile.roles)
+                {
+                    role.hardwareProfile.vmSize = AliasVmSize(role.hardwareProfile.vmSize);
+                }
             }
 
             return clusterData;
@@ -110,6 +113,11 @@ namespace SignalRDashboard.Data.Milliman.Clients
             }
             
             return databases;
+        }
+
+        private static string AliasVmSize(string longVersion)
+        {
+            return longVersion.Replace("Standard_", "");
         }
 
         private T GetAzureResponse<T>(string request)

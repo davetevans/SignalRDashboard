@@ -37,11 +37,13 @@ namespace SignalRDashboard.Web.Utilities
                 if (cache.ContainsFiles)
                 {
                     var random = new Random();
-                    return !string.IsNullOrEmpty(keyword)
-                        ? cache.Files.Where(f => f.Contains(keyword))
-                            .Skip(random.Next(0, cache.Files.Count() - 1))
-                            .FirstOrDefault()
-                        : cache.Files.Skip(random.Next(0, cache.Files.Count() - 1)).FirstOrDefault();
+
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        return cache.Files.FirstOrDefault(f => f.Contains(keyword));
+                    }
+
+                    return cache.Files.Skip(random.Next(0, cache.Files.Count() - 1)).FirstOrDefault();
                 }
             }
 

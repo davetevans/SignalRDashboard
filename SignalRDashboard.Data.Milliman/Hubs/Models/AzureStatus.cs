@@ -66,6 +66,13 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     UpdateOrAddClusterStat(dashGroup, webStat);
                 }
 
+                var clusterStatsToRemove = dashGroup.ClusterStats.Where(s => webGroup.ClusterStats.All(w => w.Name != s.GroupName)).ToList();
+                foreach (var dashStat in clusterStatsToRemove)
+                {
+                    dashGroup.ClusterStats.Remove(dashStat);
+                    HasChanged = true;
+                }
+
                 foreach (var webStat in webGroup.SqlStats
                         .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date) })
                         .GroupBy(g => g.Size)
@@ -78,6 +85,19 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 {
                     UpdateOrAddSqlStat(dashGroup, webStat);
                 }
+                
+                var sqlStatsToRemove = dashGroup.SqlStats.Where(s => webGroup.SqlStats.All(w => w.Name != s.GroupName)).ToList();
+                foreach (var dashStat in sqlStatsToRemove)
+                {
+                    dashGroup.SqlStats.Remove(dashStat);
+                    HasChanged = true;
+                }
+            }
+
+            if (!dashGroup.ClusterStats.Any() && !dashGroup.SqlStats.Any())
+            {
+                _groups.Remove(dashGroup);
+                HasChanged = true;
             }
 
             HasChanged = HasChanged || dashGroup.HasChanged;
