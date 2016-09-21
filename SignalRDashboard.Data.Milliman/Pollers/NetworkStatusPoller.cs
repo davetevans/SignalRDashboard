@@ -14,7 +14,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private readonly NetworkStatusProvider _provider;
 
         private NetworkStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(15), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(30), new PollOnlyWhenUsersAreConnectedStrategy())
         {
             _provider = new NetworkStatusProvider();
         }

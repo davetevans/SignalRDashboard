@@ -14,7 +14,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private readonly AzureStatusProvider _provider;
 
         private AzureStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(15), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(60), new PollOnlyWhenUsersAreConnectedStrategy())
         {
             _provider = new AzureStatusProvider();
         }

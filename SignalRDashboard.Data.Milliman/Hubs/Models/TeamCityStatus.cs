@@ -28,7 +28,9 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                         ConfigName = bc.ConfigName,
                         BuildNumber = bc.BuildNumber,
                         BuildFailed = bc.BuildFailed,
-                        PercentageComplete = bc.PercentageComplete
+                        PercentageComplete = bc.PercentageComplete,
+                        BuildFailedMessageReceivedCount = bc.BuildFailed ? 1 : 0,
+                        BuildNewlyFailed = bc.BuildFailed
                     }).ToList()
                 };
                 _projects.Add(dashProject);
@@ -60,7 +62,9 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     BuildNumber = webBuild.BuildNumber,
                     BuildFailed = webBuild.BuildFailed,
                     BuildRunning = webBuild.BuildRunning,
-                    PercentageComplete = webBuild.PercentageComplete
+                    PercentageComplete = webBuild.PercentageComplete,
+                    BuildFailedMessageReceivedCount = webBuild.BuildFailed ? 1: 0,
+                    BuildNewlyFailed = webBuild.BuildFailed
                 });
                 HasChanged = true;
             }
@@ -72,8 +76,17 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 dashBuild.BuildFailed = webBuild.BuildFailed;
                 dashBuild.BuildRunning = webBuild.BuildRunning;
                 dashBuild.PercentageComplete = webBuild.PercentageComplete;
+                dashBuild.BuildFailedMessageReceivedCount = SetBuildFailedMessageReceivedCount(dashBuild.BuildFailedMessageReceivedCount, webBuild.BuildFailed);
+                dashBuild.BuildNewlyFailed = dashBuild.BuildFailedMessageReceivedCount == 1;
                 HasChanged = dashBuild.HasChanged;
             }
+        }
+
+        private static int SetBuildFailedMessageReceivedCount(int currentCount, bool buildFailed)
+        {
+            return currentCount == 0
+                ? (buildFailed ? 1 : 0)
+                : (buildFailed ? currentCount + 1 : 0);
         }
 
         public override

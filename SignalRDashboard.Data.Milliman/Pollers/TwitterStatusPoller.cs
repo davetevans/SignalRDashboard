@@ -15,7 +15,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private int _lastTweetId;
 
         private TwitterStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(15), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(10), new PollOnlyWhenUsersAreConnectedStrategy())
         {
             _provider = new TwitterStatusProvider();
         }

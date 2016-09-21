@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDashboard.Web", "Sig
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDashboard.Data.Milliman", "SignalRDashboard.Data.Milliman\SignalRDashboard.Data.Milliman.csproj", "{2DCED668-4980-433D-B304-ADFF39F79786}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDashboard.Tests", "SignalRDashboard.Tests\SignalRDashboard.Tests.csproj", "{ECA4A30B-D24B-40A0-9861-E6CC81365244}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2DCED668-4980-433D-B304-ADFF39F79786}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DCED668-4980-433D-B304-ADFF39F79786}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DCED668-4980-433D-B304-ADFF39F79786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECA4A30B-D24B-40A0-9861-E6CC81365244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA4A30B-D24B-40A0-9861-E6CC81365244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA4A30B-D24B-40A0-9861-E6CC81365244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA4A30B-D24B-40A0-9861-E6CC81365244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

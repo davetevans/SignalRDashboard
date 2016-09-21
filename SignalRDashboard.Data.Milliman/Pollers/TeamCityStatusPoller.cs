@@ -14,7 +14,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private readonly TeamCityStatusProvider _provider;
 
         private TeamCityStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(15), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(60), new PollOnlyWhenUsersAreConnectedStrategy())
         {
             _provider = new TeamCityStatusProvider();
         }

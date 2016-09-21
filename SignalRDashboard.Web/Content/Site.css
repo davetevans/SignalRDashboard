@@ -144,7 +144,7 @@ div.error-long {
      animation-iteration-count: 15;
 }
 
- div.error, div.warning {
+div.error, div.warning {
      animation-iteration-count: 2;
 }
 
@@ -154,6 +154,10 @@ div.error, div.priority-alert {
 
 div.row {
     margin-bottom: 3px;
+}
+
+div.errored {
+    background-color: #CC0000;
 }
 
 div.success {
