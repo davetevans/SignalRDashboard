@@ -186,3 +186,20 @@ footer {
     text-align: center;
     padding: 10px;
 }
+
+div.confidence-container {
+    padding: 20px 80px;
+    height: 800px;
+}
+
+div.confidence-scale-bounds {
+    background-color: #1d6100;
+    border: 1px solid #1d6100;
+    height: 100%;
+}
+
+div.confidence-scale {
+    background-color: #222222;
+    text-align: center;
+    padding-top: 20px;
+}

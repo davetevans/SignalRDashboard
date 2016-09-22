@@ -10,22 +10,6 @@
     margin: 5px;
     padding: 5px 20px;
     border: 1px solid #DDD;
-    /*height: 650px;
-    overflow-y: auto;*/
-}
-
-.flex-item-third {
-    flex: 1 29%;
-    margin: 5px;
-    padding: 5px 20px;
-    border: 1px solid #DDD;
-}
-
-.flex-item-two-thirds {
-    flex: 1 59%;
-    margin: 5px;
-    padding: 5px 20px;
-    border: 1px solid #DDD;
 }
 
 .flex-item-full {
@@ -39,4 +23,44 @@
     margin: 5px;
     padding: 10px;
     border: 0 solid #666;
+}
+
+.flex-item-3-1 {
+    flex: 1 29%;
+    margin: 5px;
+    padding: 5px 20px;
+    border: 1px solid #DDD;
+}
+
+.flex-item-3-2 {
+    flex: 1 59%;
+    margin: 5px;
+    padding: 5px 20px;
+    border: 1px solid #DDD;
+}
+
+.flex-item-5-1 {
+    flex: 1 19%;
+    margin: 5px;
+    padding: 5px 20px;
+}
+
+.flex-item-5-2 {
+    flex: 1 42%;
+    margin: 5px;
+    padding: 5px 20px;
+    border: 1px solid #DDD;
+}
+
+.flex-item-7-1 {
+    flex: 1 9%;
+    margin: 5px;
+    padding: 5px 20px;
+}
+
+.flex-item-7-3 {
+    flex: 1 42%;
+    margin: 5px;
+    padding: 5px 20px;
+    border: 1px solid #DDD;
 }

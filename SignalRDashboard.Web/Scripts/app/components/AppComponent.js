@@ -8,7 +8,8 @@
                 signalrdashboard.milliman.TeamCityStatusComponent,
                 signalrdashboard.milliman.TwitterStatusComponent,
                 signalrdashboard.milliman.AzureStatusComponent,
-                signalrdashboard.milliman.NetworkStatusComponent
+                signalrdashboard.milliman.NetworkStatusComponent,
+                signalrdashboard.milliman.ConfidenceStatusComponent
             ]
           }    
       )

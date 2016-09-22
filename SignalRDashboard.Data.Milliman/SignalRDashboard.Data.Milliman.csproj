@@ -164,10 +164,12 @@
     <Compile Include="DataSources\Models\TeamCityProjectData.cs" />
     <Compile Include="DataSources\Models\AzureResourceGroupData.cs" />
     <Compile Include="DataSources\Models\NetworkStatusData.cs" />
+    <Compile Include="DataSources\Models\ConfidenceStatusData.cs" />
     <Compile Include="DataSources\Models\TwitterStatusData.cs" />
     <Compile Include="DataSources\TeamCityStatusProvider.cs" />
     <Compile Include="DataSources\AzureStatusProvider.cs" />
     <Compile Include="DataSources\NetworkStatusProvider.cs" />
+    <Compile Include="DataSources\ConfidenceStatusProvider.cs" />
     <Compile Include="DataSources\TwitterStatusProvider.cs" />
     <Compile Include="Clients\TwitterClient.cs" />
     <Compile Include="Hubs\Models\Azure\AzureGroupStatus.cs" />
@@ -176,15 +178,18 @@
     <Compile Include="Hubs\Models\TeamCity\TeamCityProjectStatus.cs" />
     <Compile Include="Hubs\Models\TeamCityStatus.cs" />
     <Compile Include="Hubs\Models\AzureStatus.cs" />
+    <Compile Include="Hubs\Models\ConfidenceStatus.cs" />
     <Compile Include="Hubs\Models\TwitterStatus.cs" />
     <Compile Include="Hubs\TeamCityStatusHub.cs" />
     <Compile Include="Hubs\AzureStatusHub.cs" />
     <Compile Include="Hubs\NetworkStatusHub.cs" />
     <Compile Include="Hubs\Models\NetworkStatus.cs" />
+    <Compile Include="Hubs\ConfidenceStatusHub.cs" />
     <Compile Include="Hubs\TwitterStatusHub.cs" />
     <Compile Include="Pollers\TeamCityStatusPoller.cs" />
     <Compile Include="Pollers\AzureStatusPoller.cs" />
     <Compile Include="Pollers\NetworkStatusPoller.cs" />
+    <Compile Include="Pollers\ConfidenceStatusPoller.cs" />
     <Compile Include="Pollers\TwitterStatusPoller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

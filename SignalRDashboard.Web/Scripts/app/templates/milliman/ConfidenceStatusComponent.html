@@ -1,0 +1,14 @@
+﻿<div class="signalrdashboard-component">
+    <div class="row">
+        <div class="component-title">
+            TeamCity Confidence
+        </div>
+    </div>
+    <div class="row confidence-container">
+        <div class="confidence-scale-bounds">
+            <div class="confidence-scale" style="height:{{model.teamCityConfidence}}%">
+                {{100 - model.teamCityConfidence}}%
+            </div>
+        </div>
+    </div>
+</div>
