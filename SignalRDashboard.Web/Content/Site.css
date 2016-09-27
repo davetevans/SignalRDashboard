@@ -34,7 +34,6 @@ div.right-align-col-3 div.row > div:nth-child(3) {
 
 div.signalrdashboard-component {
     font-size: 2.0em;
-    padding-left: 2px;
 }
 
 div.signalrdashboard-component .component-title {
@@ -53,7 +52,7 @@ div.signalrdashboard-component .component-sub-title {
 }
 
 div.signalrdashboard-component .component-row {
-    margin: 1px 0;
+    margin-top: 4px;
     font-size: 1.3em;
 }
 
@@ -201,5 +200,19 @@ div.confidence-scale-bounds {
 div.confidence-scale {
     background-color: #222222;
     text-align: center;
-    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.tc-progress {
+    height: 100%;
+    background-color: #222222;
+    padding: 0;
+}
+
+.tc-progress-bar {
+    float: left;
+    width: 0;
+    height: 100%;
+    text-align: left;
+    background-color: #0059B3;
 }

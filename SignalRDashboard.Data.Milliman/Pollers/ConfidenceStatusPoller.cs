@@ -14,7 +14,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private readonly ConfidenceStatusProvider _provider;
 
         private ConfidenceStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(180), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(900), new PollOnlyWhenUsersAreConnectedStrategy())
         {
             _provider = new ConfidenceStatusProvider();
         }
