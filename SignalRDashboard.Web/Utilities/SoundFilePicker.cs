@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using static System.String;
 
 namespace SignalRDashboard.Web.Utilities
 {
@@ -38,9 +39,10 @@ namespace SignalRDashboard.Web.Utilities
                 {
                     var random = new Random();
 
-                    if (!string.IsNullOrEmpty(keyword))
+                    if (!IsNullOrEmpty(keyword))
                     {
-                        return cache.Files.FirstOrDefault(f => f.Contains(keyword));
+                        var keywordFiles = cache.Files.Where(f => f.Contains(keyword)).ToArray();
+                        return keywordFiles.Skip(random.Next(0, keywordFiles.Length) - 1).FirstOrDefault();
                     }
 
                     return cache.Files.Skip(random.Next(0, cache.Files.Count() - 1)).FirstOrDefault();
@@ -50,7 +52,7 @@ namespace SignalRDashboard.Web.Utilities
             if (!component.Equals("Generic", StringComparison.CurrentCultureIgnoreCase))
                 return GetRandomSoundFile("Generic", category, null);
 
-            return String.Empty;
+            return Empty;
         }
     }
 }

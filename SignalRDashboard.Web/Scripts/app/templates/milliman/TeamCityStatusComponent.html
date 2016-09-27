@@ -8,7 +8,7 @@
         <div class="row component-sub-title">
             {{project.projectName}}
         </div>
-        <div *ngFor="#config of project.buildConfigs" class="component-row row in-progress" [class.error]="config.buildNewlyFailed" [class.errored]="config.buildFailed && !config.buildRunning" [class.in-progress]="config.buildRunning">
+        <div *ngFor="#config of project.buildConfigs" class="component-row row" [class.error]="config.buildNewlyFailed" [class.errored]="config.buildFailed && !config.buildRunning" [class.in-progress]="config.buildRunning">
             <div class="col-lg-4">
                 {{config.configName}}
             </div>

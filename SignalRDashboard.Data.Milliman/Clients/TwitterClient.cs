@@ -35,19 +35,30 @@ namespace SignalRDashboard.Data.Milliman.Clients
 
             try
             {
-                var responseUserTimeLine = await httpClient.SendAsync(requestUserTimeline);
-                var json = serializer.Deserialize<List<dynamic>>(await responseUserTimeLine.Content.ReadAsStringAsync());
-                resultData.LastTweetId = json == null ? 0 : (int)json[0]["id"];
-                resultData.LastTweet = json == null ? string.Empty : json[0]["text"];
-
                 var tweetDate = DateTime.Now;
-                if (json != null)
-                {
-                    tweetDate = DateTime.ParseExact(json[0]["created_at"], TwitterDateTemplate, new System.Globalization.CultureInfo("en-GB"));
-                    tweetDate = tweetDate.AddHours(1);
-                }
 
-                resultData.LastTweetDateTime = tweetDate;
+                // hack for 8am Seattle awake alert
+                if (tweetDate.Hour == 16 && tweetDate.Minute == 0)
+                {
+                    resultData.LastTweetDateTime = tweetDate;
+                    resultData.LastTweetId = 1600;
+                    resultData.LastTweet = "Good morning Seattle!";
+                }
+                else
+                {
+                    var responseUserTimeLine = await httpClient.SendAsync(requestUserTimeline);
+                    var json = serializer.Deserialize<List<dynamic>>(await responseUserTimeLine.Content.ReadAsStringAsync());
+                    resultData.LastTweetId = json == null ? 0 : (int)json[0]["id"];
+                    resultData.LastTweet = json == null ? string.Empty : json[0]["text"];
+
+                    if (json != null)
+                    {
+                        tweetDate = DateTime.ParseExact(json[0]["created_at"], TwitterDateTemplate, new System.Globalization.CultureInfo("en-GB"));
+                        tweetDate = tweetDate.AddHours(1);
+                    }
+
+                    resultData.LastTweetDateTime = tweetDate;
+                }
             }
             catch (Exception ex)
             {
