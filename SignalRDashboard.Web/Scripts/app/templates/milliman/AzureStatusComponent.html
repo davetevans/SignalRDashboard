@@ -14,7 +14,7 @@
                     <span>Clusters: {{clusterStat.groupName}}</span>
                 </div>
                 <div class="col-lg-3">
-                    <span>{{clusterStat.count}}</span>
+                    <span [innerHTML]="clusterStat.count"></span>
                 </div>
                 <div class="col-lg-3">
                     <span class="small">{{clusterStat.aliveTime}}</span>

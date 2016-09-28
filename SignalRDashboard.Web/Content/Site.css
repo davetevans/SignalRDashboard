@@ -164,7 +164,7 @@ div.success {
 }
 
 div.in-progress {
-    background-color: #0059B3;
+    background-color: #00458a;
 }
 
 .right-align {
@@ -200,7 +200,6 @@ div.confidence-scale-bounds {
 div.confidence-scale {
     background-color: #222222;
     text-align: center;
-    margin-top: 20px;
 }
 
 .tc-progress {
@@ -214,5 +213,21 @@ div.confidence-scale {
     width: 0;
     height: 100%;
     text-align: left;
-    background-color: #0059B3;
+    background-color: #00458a;
+}
+
+.clusterProvisioning {
+    color: #00458a;
+}
+
+.clusterRunning {
+    color: #267F00;
+}
+
+.clusterDeleting {
+    color: #474A55;
+}
+
+.clusterErrored {
+    color: #CC0000;
 }

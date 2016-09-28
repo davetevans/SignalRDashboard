@@ -26,21 +26,24 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                     GroupName = webGroup.Name,
                     Location = webGroup.Location,
                     ClusterStats = webGroup.ClusterStats
-                        .Select(x => new {x.Size, TimeAlive = CalcTimeAlive(x.Date)})
+                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date), x.State })
                         .GroupBy(g => g.Size)
                         .Select(s => new AzureStatStatus
                         {
                             GroupName = s.Key,
-                            Count = s.Count(),
+                            Count = RenderStateCounts(s.Count(x => ClusterState.Provisioning.Contains(x.State)), 
+                                                      s.Count(x => ClusterState.Running.Contains(x.State)), 
+                                                      s.Count(x => ClusterState.Deleting.Contains(x.State)), 
+                                                      s.Count(x => ClusterState.Errored.Contains(x.State))),
                             AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
                         }).ToList(),
                     SqlStats = webGroup.SqlStats
-                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date) })
+                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date), x.State })
                         .GroupBy(g => g.Size)
                         .Select(s => new AzureStatStatus
                         {
                             GroupName = s.Key,
-                            Count = s.Count(),
+                            Count = s.Count().ToString(),
                             AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
                         }).ToList()
                 };
@@ -54,12 +57,15 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 dashGroup.Location = webGroup.Location;
 
                 foreach (var webStat in webGroup.ClusterStats
-                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date) })
+                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date), x.State })
                         .GroupBy(g => g.Size)
                         .Select(s => new AzureStatStatus
                         {
                             GroupName = s.Key,
-                            Count = s.Count(),
+                            Count = RenderStateCounts(s.Count(x => ClusterState.Provisioning.Contains(x.State)),
+                                                      s.Count(x => ClusterState.Running.Contains(x.State)),
+                                                      s.Count(x => ClusterState.Deleting.Contains(x.State)),
+                                                      s.Count(x => ClusterState.Errored.Contains(x.State))),
                             AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
                         }))
                 {
@@ -74,12 +80,12 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
                 }
 
                 foreach (var webStat in webGroup.SqlStats
-                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date) })
+                        .Select(x => new { x.Size, TimeAlive = CalcTimeAlive(x.Date), x.State })
                         .GroupBy(g => g.Size)
                         .Select(s => new AzureStatStatus
                         {
                             GroupName = s.Key,
-                            Count = s.Count(),
+                            Count = s.Count().ToString(),
                             AliveTime = new TimeSpan(s.Sum(a => a.TimeAlive.Ticks)).ToString("d'd 'h'h 'm'm'")
                         }))
                 {
@@ -140,6 +146,11 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
         private static TimeSpan CalcTimeAlive(string createdDate)
         {
             return DateTime.Now - DateTime.Parse(createdDate, CultureInfo.InvariantCulture);
+        }
+
+        private static string RenderStateCounts(int provisioningCount, int runningCount, int deletingCount, int erroredCount)
+        {
+            return $"{provisioningCount+runningCount+deletingCount+erroredCount}&nbsp;&nbsp;&nbsp;<span class=\"clusterProvisioning\">{provisioningCount}</span>&nbsp;<span class=\"clusterRunning\">{runningCount}</span>&nbsp;<span class=\"clusterDeleting\">{deletingCount}</span>&nbsp;<span class=\"clusterErrored\">{erroredCount}</span>";
         }
 
         public override void ResetChangedState()

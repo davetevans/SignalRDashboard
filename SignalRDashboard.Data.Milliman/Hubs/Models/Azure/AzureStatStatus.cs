@@ -6,7 +6,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
     public class AzureStatStatus : DashboardHubModel
     {
         private string _groupName;
-        private int _count;
+        private string _count;
         private string _aliveTime;
 
         public string GroupName
@@ -15,7 +15,7 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models.Azure
             set { SetProperty(ref _groupName, value); }
         }
 
-        public int Count
+        public string Count
         {
             get { return _count; }
             set { SetProperty(ref _count, value); }
