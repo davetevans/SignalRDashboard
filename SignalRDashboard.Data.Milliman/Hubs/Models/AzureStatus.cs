@@ -150,7 +150,8 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
 
         private static string RenderStateCounts(int provisioningCount, int runningCount, int deletingCount, int erroredCount)
         {
-            return $"{provisioningCount+runningCount+deletingCount+erroredCount}&nbsp;&nbsp;&nbsp;<span class=\"clusterProvisioning\">{provisioningCount}</span>&nbsp;<span class=\"clusterRunning\">{runningCount}</span>&nbsp;<span class=\"clusterDeleting\">{deletingCount}</span>&nbsp;<span class=\"clusterErrored\">{erroredCount}</span>";
+            //return $"{provisioningCount+runningCount+deletingCount+erroredCount}&nbsp;&nbsp;&nbsp;<span class=\"clusterProvisioning\">{provisioningCount}</span>&nbsp;<span class=\"clusterRunning\">{runningCount}</span>&nbsp;<span class=\"clusterDeleting\">{deletingCount}</span>&nbsp;<span class=\"clusterErrored\">{erroredCount}</span>";
+            return $"{provisioningCount + runningCount + deletingCount + erroredCount} [{provisioningCount}:{runningCount}:{deletingCount}:{erroredCount}]";
         }
 
         public override void ResetChangedState()

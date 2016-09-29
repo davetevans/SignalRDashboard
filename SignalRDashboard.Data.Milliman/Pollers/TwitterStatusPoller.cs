@@ -13,6 +13,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private static readonly Lazy<TwitterStatusPoller> PollerInstance = new Lazy<TwitterStatusPoller>(() => new TwitterStatusPoller(GlobalHost.ConnectionManager.GetHubContext<TwitterStatusHub>().Clients));
         private readonly TwitterStatusProvider _provider;
         private int _lastTweetId;
+        private DateTime _lastTweetDateTime;
 
         private TwitterStatusPoller(IHubConnectionContext<dynamic> clients)
             : base(clients, TimeSpan.FromSeconds(10), new PollOnlyWhenUsersAreConnectedStrategy())
@@ -28,14 +29,16 @@ namespace SignalRDashboard.Data.Milliman.Pollers
             var lastTweet = data.LastTweet.Trim();
             var lastTweetId = data.LastTweetId;
             var lastTweetTime = $"{data.LastTweetDateTime:t}";
+            var lastTweetDateTime = data.LastTweetDateTime.ToUniversalTime();
             model.TweetIsNew = false;
 
-            if (_lastTweetId != lastTweetId)
+            if (lastTweetDateTime > _lastTweetDateTime)
             {
-                model.TweetIsNew = true;
+                model.TweetIsNew = _lastTweetId > 0;
                 model.LastTweet = lastTweet;
                 model.LastTweetTime = lastTweetTime;
                 _lastTweetId = lastTweetId;
+                _lastTweetDateTime = lastTweetDateTime;
             }
         }
 

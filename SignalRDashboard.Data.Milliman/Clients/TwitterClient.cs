@@ -38,7 +38,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
                 var tweetDate = DateTime.Now;
 
                 // hack for 8am Seattle awake alert
-                if (tweetDate.Hour == 16 && tweetDate.Minute == 0)
+                if (tweetDate.Hour == 15 && tweetDate.Minute == 0)
                 {
                     resultData.LastTweetDateTime = tweetDate;
                     resultData.LastTweetId = 1600;
