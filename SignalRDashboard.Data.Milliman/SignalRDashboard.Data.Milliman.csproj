@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AE.Net.Mail, Version=1.7.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AE.Net.Mail.1.7.10.0\lib\net45\AE.Net.Mail.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
@@ -159,17 +163,20 @@
     <Compile Include="Clients\TeamCity\FullBuildResult.cs" />
     <Compile Include="Clients\TeamCity\HttpXmlAccessor.cs" />
     <Compile Include="Clients\TeamCity\Summary.cs" />
+    <Compile Include="Clients\GmailClient.cs" />
     <Compile Include="DataSources\Models\AzureStatData.cs" />
     <Compile Include="DataSources\Models\TeamCityBuildConfigData.cs" />
     <Compile Include="DataSources\Models\TeamCityProjectData.cs" />
     <Compile Include="DataSources\Models\AzureResourceGroupData.cs" />
     <Compile Include="DataSources\Models\NetworkStatusData.cs" />
     <Compile Include="DataSources\Models\ConfidenceStatusData.cs" />
+    <Compile Include="DataSources\Models\GmailStatusData.cs" />
     <Compile Include="DataSources\Models\TwitterStatusData.cs" />
     <Compile Include="DataSources\TeamCityStatusProvider.cs" />
     <Compile Include="DataSources\AzureStatusProvider.cs" />
     <Compile Include="DataSources\NetworkStatusProvider.cs" />
     <Compile Include="DataSources\ConfidenceStatusProvider.cs" />
+    <Compile Include="DataSources\GmailStatusProvider.cs" />
     <Compile Include="DataSources\TwitterStatusProvider.cs" />
     <Compile Include="Clients\TwitterClient.cs" />
     <Compile Include="Hubs\Models\Azure\AzureGroupStatus.cs" />
@@ -180,17 +187,20 @@
     <Compile Include="Hubs\Models\TeamCityStatus.cs" />
     <Compile Include="Hubs\Models\AzureStatus.cs" />
     <Compile Include="Hubs\Models\ConfidenceStatus.cs" />
+    <Compile Include="Hubs\Models\GmailStatus.cs" />
     <Compile Include="Hubs\Models\TwitterStatus.cs" />
     <Compile Include="Hubs\TeamCityStatusHub.cs" />
     <Compile Include="Hubs\AzureStatusHub.cs" />
     <Compile Include="Hubs\NetworkStatusHub.cs" />
     <Compile Include="Hubs\Models\NetworkStatus.cs" />
     <Compile Include="Hubs\ConfidenceStatusHub.cs" />
+    <Compile Include="Hubs\GmailStatusHub.cs" />
     <Compile Include="Hubs\TwitterStatusHub.cs" />
     <Compile Include="Pollers\TeamCityStatusPoller.cs" />
     <Compile Include="Pollers\AzureStatusPoller.cs" />
     <Compile Include="Pollers\NetworkStatusPoller.cs" />
     <Compile Include="Pollers\ConfidenceStatusPoller.cs" />
+    <Compile Include="Pollers\GmailStatusPoller.cs" />
     <Compile Include="Pollers\TwitterStatusPoller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

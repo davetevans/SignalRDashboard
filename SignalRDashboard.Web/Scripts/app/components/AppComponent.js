@@ -6,10 +6,10 @@
             directives: [
                 signalrdashboard.core.ControlsComponent,
                 signalrdashboard.milliman.TeamCityStatusComponent,
-                signalrdashboard.milliman.TwitterStatusComponent,
                 signalrdashboard.milliman.AzureStatusComponent,
                 signalrdashboard.milliman.NetworkStatusComponent,
-                signalrdashboard.milliman.ConfidenceStatusComponent
+                signalrdashboard.milliman.ConfidenceStatusComponent,
+                signalrdashboard.milliman.GmailStatusComponent
             ]
           }    
       )

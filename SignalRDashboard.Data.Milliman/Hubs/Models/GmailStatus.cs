@@ -1,0 +1,26 @@
+using SignalRDashboard.Data.Core.Hubs.Models;
+
+namespace SignalRDashboard.Data.Milliman.Hubs.Models
+{
+    public class GmailStatus : DashboardHubModel
+    {
+        private string _lastMail;
+        public string LastMail
+        {
+            get { return _lastMail; }
+            set { SetProperty(ref _lastMail, value); }
+        }
+        private bool _mailIsNew;
+        public bool MailIsNew
+        {
+            get { return _mailIsNew; }
+            set { SetProperty(ref _mailIsNew, value); }
+        }
+        private string _lastMailTime;
+        public string LastMailTime
+        {
+            get { return _lastMailTime; }
+            set { SetProperty(ref _lastMailTime, value); }
+        }
+    }
+}

@@ -13,7 +13,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private static readonly Lazy<TwitterStatusPoller> PollerInstance = new Lazy<TwitterStatusPoller>(() => new TwitterStatusPoller(GlobalHost.ConnectionManager.GetHubContext<TwitterStatusHub>().Clients));
         private readonly TwitterStatusProvider _provider;
         private int _lastTweetId;
-        private DateTime _lastTweetDateTime;
+        private DateTime _lastTweetDateTime = DateTime.Now;
 
         private TwitterStatusPoller(IHubConnectionContext<dynamic> clients)
             : base(clients, TimeSpan.FromSeconds(10), new PollOnlyWhenUsersAreConnectedStrategy())
