@@ -68,6 +68,7 @@
     <Compile Include="Hubs\IHubUserConnectionTrackingStrategy.cs" />
     <Compile Include="Hubs\Models\DashboardHubModel.cs" />
     <Compile Include="Hubs\DashboardHub.cs" />
+    <Compile Include="Hubs\SubscribingHub.cs" />
     <Compile Include="Hubs\PollingHub.cs" />
     <Compile Include="Hubs\TrackConnectedUsersStrategy.cs" />
     <Compile Include="Pollers\DatasourcePoller.cs" />
@@ -76,6 +77,8 @@
     <Compile Include="Pollers\PollOnlyWhenUsersAreConnectedStrategy.cs" />
     <Compile Include="Pollers\PollWhereUsersAreConnectedOrNotStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subscribers\DatasourceSubscriber.cs" />
+    <Compile Include="Subscribers\IDatasourceSubscriber.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

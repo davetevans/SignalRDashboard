@@ -10,6 +10,12 @@ namespace SignalRDashboard.Data.Milliman.Hubs.Models
             get { return _lastMail; }
             set { SetProperty(ref _lastMail, value); }
         }
+        private string _lastMailId;
+        public string LastMailId
+        {
+            get { return _lastMailId; }
+            set { SetProperty(ref _lastMailId, value); }
+        }
         private bool _mailIsNew;
         public bool MailIsNew
         {

@@ -4,18 +4,17 @@
             for (var i = 0; i < checks.length; i++) {
                 var thisCheck = checks[i];
                 var thisModel = thisCheck.model;
-
                 var isError = thisCheck.condition();
                 if (isError !== thisModel[thisCheck.targetProperty]) {
                     thisModel[thisCheck.targetProperty] = isError;
                     if (isError) {
-                        if (component === 'TwitterStatus') {
-                            signalrdashboard.soundPlayer.playCustom(component, thisModel.lastTweet);
+                        if (component === 'GmailStatus') {
+                            signalrdashboard.soundPlayer.playCustom(component, thisModel.lastMail);
                         } else {
                             signalrdashboard.soundPlayer.playError(component);
                         }
                     } else {
-                        if (component !== 'TwitterStatus') {
+                        if (component !== 'GmailStatus') {
                             signalrdashboard.soundPlayer.playSuccess(component);
                         }
                     }

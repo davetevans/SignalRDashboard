@@ -18,6 +18,10 @@
         this.updateFromData = function(data) {            
             signalrdashboard.mapping.map(data, this);
             signalrdashboard.alertHandler.performErrorChecks('GmailStatus', errorChecks);
+            window.setTimeout(function() {
+                model.hasNewMail = false;
+                model.mailIsNew = false;
+            }, 20000);
         };
     }
     

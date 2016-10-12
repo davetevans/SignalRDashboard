@@ -19,15 +19,21 @@
             
             // Add a client-side hub method that the server will call
             hub.client.updateGmailStatus = function(stats) {
+                Cookies.set("lastMail", stats.lastMail); 
+                Cookies.set("lastMailTime", stats.lastMailTime); 
                 model.updateFromData(stats);
             };
           },
-          initialiseData: function(connection) {
+          initialiseData: function() {
               var model = this.model;
-             
-              connection.gmailStatus.server.getModel().done(function(stats) {
-                  model.updateFromData(stats);
-              });                    
+              var defaultMail = Cookies.get("lastMail") === "null" ? null : Cookies.get("lastMail"); 
+              var defaultLastMailTime = Cookies.get("lastMailTime") === "null" ? null : Cookies.get("lastMailTime"); 
+              var gmailStatus = {
+                lastMail: defaultMail || "where's the f'ing coffee van!",
+                lastMailTime: defaultLastMailTime || "09:00",
+                mailIsNew: false
+              };
+              model.updateFromData(gmailStatus);                   
           }
-          });
+    });
 })(window.signalrdashboard.milliman || (window.signalrdashboard.milliman = {}));
