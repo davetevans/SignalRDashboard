@@ -2,23 +2,20 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using AE.Net.Mail;
-using AE.Net.Mail.Imap;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using SignalRDashboard.Data.Core.Subscribers;
 using SignalRDashboard.Data.Milliman.Hubs;
 using SignalRDashboard.Data.Milliman.Hubs.Models;
+using ImapX;
 
 namespace SignalRDashboard.Data.Milliman.Subscribers
 {
-    public class GmailStatusSubscriber : DatasourceSubscriber<GmailStatus, GmailStatusHub>
+    public class GmailStatusSubscriber : DatasourceSubscriber<GmailStatus, GmailSubscriberStatusHub>
     {
         private static readonly Lazy<GmailStatusSubscriber> SubscriberInstance = new Lazy<GmailStatusSubscriber>(() => new GmailStatusSubscriber(GlobalHost.ConnectionManager.GetHubContext<GmailStatusHub>().Clients));
 
-        private readonly ImapClient _client;
-        private DateTime _lastMailDateTime;
-        private string _lastMailId;
+        private long _lastMailId;
 
         private static readonly List<string> InterestingKeywords = new List<string>
         {
@@ -35,32 +32,41 @@ namespace SignalRDashboard.Data.Milliman.Subscribers
             : base(clients)
         {
             var config = ConfigurationManager.AppSettings;
-            _client = new ImapClient("imap.gmail.com", config["GmailAddress"], config["GmailPassword"], AuthMethods.Login, 993, true);
-            _client.SelectMailbox("Inbox");
-            _client.NewMessage += OnNewMessage;
+            var client = new ImapClient("imap.gmail.com", 993, true, false) { Behavior = { NoopIssueTimeout = 300 } };
+
+            if (client.Connect())
+            {
+                if (client.Login(config["GmailAddress"], config["GmailPassword"]))
+                {
+                    client.Folders.Inbox.OnNewMessagesArrived += OnNewMessage;
+                    client.Folders.Inbox.StartIdling();
+                }
+            }
+            else
+            {
+                // connection not successful
+            }
         }
 
-        private void OnNewMessage(object sender, MessageEventArgs e)
+        private void OnNewMessage(object sender, IdleEventArgs e)
         {
-            var newMessage = _client.GetMessage(e.MessageCount - 1);
+            var newMessage = e.Messages[0];
 
             if (newMessage != null && IsInteresting(newMessage.Subject))
             {
-                var lastMail = newMessage.Subject?.Trim();
-                var lastMailId = newMessage.MessageID;
-                var lastMailTime = $"{newMessage.Date:t}";
-                var lastMailDateTime = newMessage.Date;
+                var newMailMessage = newMessage.Subject?.Trim();
+                var newMailId = newMessage.UId;
+                var newMailTime = $"{(newMessage.Date ?? DateTime.Now.AddHours(-1)).AddHours(1):t}";
 
-                if (lastMailDateTime > _lastMailDateTime && lastMailId != _lastMailId)
+                if (newMailId > _lastMailId)
                 {
                     var model = new GmailStatus
                     {
                         MailIsNew = true,
-                        LastMail = lastMail,
-                        LastMailTime = lastMailTime
+                        LastMail = newMailMessage,
+                        LastMailTime = newMailTime
                     };
-                    _lastMailDateTime = lastMailDateTime;
-                    _lastMailId = lastMailId;
+                    _lastMailId = newMailId;
 
                     RefreshData(model);
                 }

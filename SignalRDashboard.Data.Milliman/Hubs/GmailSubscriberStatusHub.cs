@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNet.SignalR.Hubs;
 using SignalRDashboard.Data.Core.Hubs;
 using SignalRDashboard.Data.Milliman.Hubs.Models;
-using SignalRDashboard.Data.Milliman.Pollers;
+using SignalRDashboard.Data.Milliman.Subscribers;
 
 namespace SignalRDashboard.Data.Milliman.Hubs
 {
-    [HubName("gmailStatus")]
-    public class GmailStatusHub : PollingHub<GmailStatus>
-    { 
-        public GmailStatusHub()
+    [HubName("gmailSubscriberStatus")]
+    public class GmailSubscriberStatusHub : SubscribingHub<GmailStatus>
+    {
+        public GmailSubscriberStatusHub()
             : base(new TrackConnectedUsersStrategy(),
-                  GmailStatusPoller.Instance)
+                  GmailStatusSubscriber.Instance)
         {
         }
     }

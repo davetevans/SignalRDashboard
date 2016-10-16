@@ -20,6 +20,7 @@
     function bindEvents() {
         _$muteToggleButton.on("click", toggleMute);
         $("#stopsoundbutton").on("click", stopSound);
+        $("#testsoundbutton").on("click", playTestSound);
     }
 
     function unmute() {
@@ -47,4 +48,9 @@
     function stopSound() {
         signalrdashboard.soundPlayer.silence();
     }
+
+    function playTestSound() {
+        signalrdashboard.soundPlayer.playTestSound("gmailstatus", "test");
+    }
+
 })(window.signalrdashboard.core || (window.signalrdashboard.core = {}));

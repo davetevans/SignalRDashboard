@@ -50,12 +50,12 @@
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
-      <HintPath>..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
+    <Reference Include="ImapX, Version=2.0.0.18, Culture=neutral, PublicKeyToken=5992873d65130d1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImapX.2.0.0.18\lib\net46\ImapX.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MailKit, Version=1.8.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
-      <HintPath>..\packages\MailKit.1.8.1\lib\net451\MailKit.dll</HintPath>
+    <Reference Include="JsonFx, Version=2.0.1209.2802, Culture=neutral, PublicKeyToken=315052dd637f8a52, processorArchitecture=MSIL">
+      <HintPath>..\packages\JsonFx.2.0.1209.2802\lib\net40\JsonFx.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -176,19 +176,23 @@
     <Compile Include="Clients\TeamCity\FullBuildResult.cs" />
     <Compile Include="Clients\TeamCity\HttpXmlAccessor.cs" />
     <Compile Include="Clients\TeamCity\Summary.cs" />
+    <Compile Include="Clients\GmailClient.cs" />
     <Compile Include="DataSources\Models\AzureStatData.cs" />
     <Compile Include="DataSources\Models\TeamCityBuildConfigData.cs" />
     <Compile Include="DataSources\Models\TeamCityProjectData.cs" />
     <Compile Include="DataSources\Models\AzureResourceGroupData.cs" />
     <Compile Include="DataSources\Models\NetworkStatusData.cs" />
     <Compile Include="DataSources\Models\ConfidenceStatusData.cs" />
+    <Compile Include="DataSources\Models\GmailStatusData.cs" />
     <Compile Include="DataSources\Models\TwitterStatusData.cs" />
     <Compile Include="DataSources\TeamCityStatusProvider.cs" />
     <Compile Include="DataSources\AzureStatusProvider.cs" />
     <Compile Include="DataSources\NetworkStatusProvider.cs" />
     <Compile Include="DataSources\ConfidenceStatusProvider.cs" />
+    <Compile Include="DataSources\GmailStatusProvider.cs" />
     <Compile Include="DataSources\TwitterStatusProvider.cs" />
     <Compile Include="Clients\TwitterClient.cs" />
+    <Compile Include="Hubs\GmailSubscriberStatusHub.cs" />
     <Compile Include="Hubs\Models\Azure\AzureGroupStatus.cs" />
     <Compile Include="Hubs\Models\Azure\ClusterState.cs" />
     <Compile Include="Hubs\Models\Azure\AzureStatStatus.cs" />
@@ -210,6 +214,7 @@
     <Compile Include="Pollers\AzureStatusPoller.cs" />
     <Compile Include="Pollers\NetworkStatusPoller.cs" />
     <Compile Include="Pollers\ConfidenceStatusPoller.cs" />
+    <Compile Include="Pollers\GmailStatusPoller.cs" />
     <Compile Include="Pollers\TwitterStatusPoller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subscribers\GmailStatusSubscriber.cs" />

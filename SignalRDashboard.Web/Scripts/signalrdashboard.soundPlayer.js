@@ -86,6 +86,12 @@
                 });
             }
         },
+
+        playTestSound : function(component, customText) {
+            $.get("Media/GetCustomErrorSound", { component: component, customText: customText }, function(response) {
+                playSound(response, SoundCategory.Error);
+            });
+        },
         
         silence: stopSound,
 

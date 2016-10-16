@@ -270,6 +270,7 @@
     <Content Include="Content\images\internet_on.png" />
     <Content Include="Content\images\teamcity_off.png" />
     <Content Include="Content\images\teamcity_on.png" />
+    <Content Include="Content\images\test-sound.png" />
     <Content Include="Content\images\van.png" />
     <Content Include="Content\Sounds\Generic\Error\AirHorn.mp3" />
     <Content Include="Content\Sounds\Generic\Error\multi-doh.mp3" />
