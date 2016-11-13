@@ -16,7 +16,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private DateTime _lastTweetDateTime = DateTime.Now;
 
         private TwitterStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(10), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(10), new PollWhereUsersAreConnectedOrNotStrategy())
         {
             _provider = new TwitterStatusProvider();
         }

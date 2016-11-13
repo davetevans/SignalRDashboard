@@ -16,7 +16,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private long _lastMailId;
 
         private GmailStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(15), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(15), new PollWhereUsersAreConnectedOrNotStrategy())
         {
             _provider = new GmailStatusProvider();
         }
