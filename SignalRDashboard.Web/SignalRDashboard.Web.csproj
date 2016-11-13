@@ -277,6 +277,7 @@
     <Content Include="Content\Sounds\Generic\Success\applause.mp3" />
     <Content Include="Content\Sounds\Generic\Success\drumroll.mp3" />
     <Content Include="Content\Sounds\Generic\Success\TaDa.mp3" />
+    <Content Include="Content\Sounds\GmailStatus\Error\Aids.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\AirHorn.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\Coffee.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\Coffee2.mp3" />

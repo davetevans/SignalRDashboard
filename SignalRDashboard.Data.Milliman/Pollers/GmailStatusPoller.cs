@@ -16,7 +16,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
         private long _lastMailId;
 
         private GmailStatusPoller(IHubConnectionContext<dynamic> clients)
-            : base(clients, TimeSpan.FromSeconds(20), new PollOnlyWhenUsersAreConnectedStrategy())
+            : base(clients, TimeSpan.FromSeconds(15), new PollOnlyWhenUsersAreConnectedStrategy())
         {
             _provider = new GmailStatusProvider();
         }
@@ -34,7 +34,7 @@ namespace SignalRDashboard.Data.Milliman.Pollers
 
             if (lastMailDateTime > _lastMailDateTime)
             {
-                model.MailIsNew = lastMailId > _lastMailId;
+                model.MailIsNew = lastMailId == 0 || lastMailId > _lastMailId;
                 model.LastMail = lastMail;
                 model.LastMailTime = lastMailTime;
                 _lastMailDateTime = lastMailDateTime;

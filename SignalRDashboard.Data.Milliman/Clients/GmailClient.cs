@@ -18,7 +18,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
             "curry", "ice", "cream", "fire", "alarm", "van", "man",
             "french", "terrace",
             "is here",
-            "test", "hello"
+            "test", "hello", "aids"
         };
 
         public GmailClient(string emailAddress, string emailPassword)
@@ -38,7 +38,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
                 if (now.Hour == 15 && now.Minute == 00)
                 {
                     resultData.LastMessage = "Good morning Seattle!";
-                    resultData.LastMailId = 1600;
+                    resultData.LastMailId = 0;
                     resultData.LastMailDateTime = now;
                 }
                 else
@@ -91,7 +91,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
 
         private static bool IsInterestingMail(string content)
         {
-            return InterestingKeywords.Any(content.Contains);
+            return InterestingKeywords.Any(content.ToLower().Contains);
         }
     }
 }

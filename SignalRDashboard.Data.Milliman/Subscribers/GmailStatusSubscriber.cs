@@ -23,7 +23,7 @@ namespace SignalRDashboard.Data.Milliman.Subscribers
             "curry", "ice", "cream", "fire", "alarm", "van", "man",
             "french", "terrace",
             "is here",
-            "test", "hello"
+            "test", "hello", "aids"
         };
 
         public static GmailStatusSubscriber Instance => SubscriberInstance.Value;

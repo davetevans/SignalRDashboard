@@ -87,6 +87,11 @@ namespace SignalRDashboard.Web.Controllers
                 return "Test";
             }
 
+            if (customText.Contains("aids"))
+            {
+                return "Aids";
+            }
+
             return "AirHorn";
         }
     }
