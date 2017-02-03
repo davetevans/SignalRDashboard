@@ -285,6 +285,7 @@
     <Content Include="Content\Sounds\GmailStatus\Error\Fire.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\French.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\Ice.mp3" />
+    <Content Include="Content\Sounds\GmailStatus\Error\Reception.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\Seattle.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\Test.mp3" />
     <Content Include="Content\Sounds\GmailStatus\Error\Trombone.mp3" />

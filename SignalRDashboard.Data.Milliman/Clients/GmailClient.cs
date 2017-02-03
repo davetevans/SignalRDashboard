@@ -18,7 +18,7 @@ namespace SignalRDashboard.Data.Milliman.Clients
             "curry", "ice", "cream", "fire", "alarm", "van", "man",
             "french", "terrace",
             "is here",
-            "test", "hello", "aids"
+            "test", "hello", "aids", "reception", "visitor"
         };
 
         public GmailClient(string emailAddress, string emailPassword)
