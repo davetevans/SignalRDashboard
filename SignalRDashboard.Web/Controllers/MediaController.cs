@@ -82,19 +82,19 @@ namespace SignalRDashboard.Web.Controllers
                 return "Seattle";
             }
 
-            if (customText.Contains("test") || customText.Contains("hello"))
-            {
-                return "Test";
-            }
-
             if (customText.Contains("aids"))
             {
                 return "Aids";
             }
 
-            if (customText.Contains("reception") || customText.Contains("visitor"))
+            if (customText.Contains("reception") || customText.Contains("visitor") || customText.Contains("parcel") || customText.Contains("package"))
             {
                 return "Reception";
+            }
+
+            if (customText.Contains("test") || customText.Contains("hello"))
+            {
+                return "Test";
             }
 
             return "AirHorn";
